@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Spyapp</string>
+    <string name="regester">Regester</string>
+    <string name="enter_pawword">Enter Pawword</string>
+    <string name="enter_login">Enter Login</string>
+    <string name="log_in">Log in</string>
 </resources>
