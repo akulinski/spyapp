@@ -8,6 +8,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -18,7 +21,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -38,6 +49,7 @@ public class ServerClient implements IServerClient {
         context = con;
         queue = Volley.newRequestQueue(context);
         lock = new ReentrantLock();
+
     }
 
     @Override
@@ -50,45 +62,45 @@ public class ServerClient implements IServerClient {
                 while (true) {
                     lock.lock();
 
-                    try {
-                        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-
-                                        int duration = Toast.LENGTH_SHORT;
-
-                                        counter++;
-
-                                        Toast toast = Toast.makeText(context,  response+ counter, duration);
-                                        toast.show();
-                                        Log.d("response", response);
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                                int duration = Toast.LENGTH_SHORT;
-                                Toast toast = Toast.makeText(context, error.getMessage(), duration);
-                                toast.show();
-                            }
-                        });
-                        queue.add(stringRequest);
-                    } catch (SecurityException s) {
+                    try
+                    {
+                        ServerRequest serverRequest=new ServerRequest(Urls.TEST.url);
+                        Log.d("URL",serverRequest.getReturnedValue());
+                    }
+                    catch (SecurityException s)
+                    {
                         s.getCause();
-                    } finally {
+                    }
+                    finally
+                    {
                         lock.unlock();
                     }
-                    try {
+                    try
+                    {
                         Thread.sleep(1000);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e)
+                    {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
 
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
 
     }
 
