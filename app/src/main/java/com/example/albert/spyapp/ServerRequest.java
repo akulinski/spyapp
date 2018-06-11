@@ -52,8 +52,6 @@ public class ServerRequest {
 
     }
 
-
-
     public String getReturnedValue() {
         return returnedValue;
     }

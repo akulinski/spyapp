@@ -2,6 +2,7 @@ package com.example.albert.spyapp;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,6 +43,13 @@ public class ServerClient implements IServerClient {
     private Context context;
     private RequestQueue queue;
     private ReentrantLock lock;
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    private boolean connected=false;
+
     URLConnection urlConnection;
     int counter = 0;
 
@@ -60,20 +68,26 @@ public class ServerClient implements IServerClient {
             public void run() {
 
                 while (true) {
-                    lock.lock();
+
 
                     try
                     {
                         ServerRequest serverRequest=new ServerRequest(Urls.TEST.url);
+                        if (serverRequest.getReturnedValue().contains("{\"Success\":\"true\"}"))
+                        {
+                            connected=true;
+                            Log.d("connected?","true");
+                        }
+                        else
+                        {
+                            connected=false;
+                            Log.d("connected?","false");
+                        }
                         Log.d("URL",serverRequest.getReturnedValue());
                     }
                     catch (SecurityException s)
                     {
                         s.getCause();
-                    }
-                    finally
-                    {
-                        lock.unlock();
                     }
                     try
                     {

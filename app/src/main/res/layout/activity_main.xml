@@ -54,5 +54,15 @@
             android:layout_alignEnd="@+id/Text"
             android:layout_alignTop="@+id/loginbutton"
             android:text="@string/regester" />
+
+        <TextView
+            android:id="@+id/connected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:text="not connected"
+            android:textColor="@android:color/holo_red_light" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
