@@ -1,6 +1,9 @@
 package com.example.albert.spyapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,59 +65,6 @@ public class ServerClient implements IServerClient {
 
     @Override
     public void testConnection() {
-        final String url = Urls.TEST.url;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                while (true) {
-
-
-                    try
-                    {
-                        ServerRequest serverRequest=new ServerRequest(Urls.TEST.url);
-                        if (serverRequest.getReturnedValue().contains("{\"Success\":\"true\"}"))
-                        {
-                            connected=true;
-                            Log.d("connected?","true");
-                        }
-                        else
-                        {
-                            connected=false;
-                            Log.d("connected?","false");
-                        }
-                        Log.d("URL",serverRequest.getReturnedValue());
-                    }
-                    catch (SecurityException s)
-                    {
-                        s.getCause();
-                    }
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
-
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
 
     }
 
