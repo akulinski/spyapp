@@ -63,6 +63,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        startService(new Intent(this, TestOnlineService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        stopService(new Intent(this, TestOnlineService.class));
+    }
+
     class MyBroadCastReceiver extends BroadcastReceiver
     {
 
@@ -71,14 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
             try
             {
-                Log.d("recived", "onReceive() called");
+                Log.d("received", "onReceive() called");
 
-                // uncomment this line if you had sent some data
-//                Log.e(TAG, "data=="+data);
-                Log.d("onRecive","connected");
+
+
                 boolean connected = intent.getBooleanExtra("connected",false);
-                textView.setText("connected");
-                textView.setTextColor(Color.parseColor("#00FF00"));
+                if(connected==true) {
+                    textView.setText("connected");
+                    textView.setTextColor(Color.parseColor("#00FF00"));
+                }
+                else{
+                    textView.setText("not connected");
+                    textView.setTextColor(Color.parseColor("#FF0000"));
+                }
             }
             catch (Exception ex)
             {
