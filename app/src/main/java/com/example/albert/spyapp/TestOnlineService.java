@@ -12,8 +12,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TestOnlineService extends IntentService {
     boolean connected =false;
+    ReentrantLock lock=new ReentrantLock();
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,12 +45,23 @@ public class TestOnlineService extends IntentService {
     }
 
     private void sendBroadcastMessage(boolean connected) {
+        try {
+            lock.lock();
             Intent intent = new Intent();
             intent.setAction("com.example.albert.spyapp;");
 
             intent.putExtra("connected", connected);
 
             sendBroadcast(intent);
+        }catch (Exception ex)
+        {
+            Log.d("exception while sending","exec");
+        }
+
+        finally {
+            lock.unlock();
+        }
+
 
     }
 
@@ -59,47 +73,50 @@ public class TestOnlineService extends IntentService {
             public void run() {
 
                 while (true) {
-                    Log.d("While","started");
-                    try
-                    {
-                        ServerRequest serverRequest=new ServerRequest(Urls.TEST.url);
-                        serverRequest.makeTestRequest();
-                        Log.d("serverRequest",serverRequest.getReturnedValue());
-                        if (serverRequest.getReturnedValue().equals("\"{\\\"Success\\\":\\\"true\\\"}\""))
-                        {
-                            connected=true;
-                            Log.d("connected?","true");
-                            Log.d("Sending Broadcast","true");
-                            sendBroadcastMessage(connected);
-                        }
-                        else
-                        {
-                            connected=false;
-                            Log.d("connected?","false");
-                            sendBroadcastMessage(connected);
+                    Log.d("While", "started");
+                    try {
+                        lock.lock();
+                        ServerRequest serverRequest = new ServerRequest(Urls.TEST.url);
+                        if (!serverRequest.getReturnedValue().equals("error")) {
+                            serverRequest.makeTestRequest();
+                            Log.d("serverRequest", serverRequest.getReturnedValue());
+                            if (serverRequest.getReturnedValue().equals("\"{\\\"Success\\\":\\\"true\\\"}\"")) {
+                                connected = true;
+                                Log.d("connected?", "true");
+                                Log.d("Sending Broadcast", "true");
+                            } else {
+                                connected = false;
+                                Log.d("connected?", "false");
+                            }
                         }
                     }
-                    catch (SecurityException s)
-                    {
-                        s.getCause();
-                        Log.d("Securityexception",s.getMessage());
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.d("exception",ex.getLocalizedMessage());
-                    }
+                    catch(SecurityException s)
+                        {
+                            connected = false;
+                            s.getCause();
+                            Log.d("Securityexception", s.getMessage());
+                        }
+                    catch(Exception ex)
+                        {
+                            connected = false;
 
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
+                            Log.d("exception", ex.getLocalizedMessage());
+                        }
+                        finally {
+                        lock.unlock();
+                        sendBroadcastMessage(connected);
                     }
                 }
+
             }
         }).start();
+
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                sendBroadcastMessage(connected);
+            }
+        });
 
     }
 }

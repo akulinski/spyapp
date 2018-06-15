@@ -63,20 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        startService(new Intent(this, TestOnlineService.class));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        stopService(new Intent(this, TestOnlineService.class));
-    }
-
     class MyBroadCastReceiver extends BroadcastReceiver
     {
 
