@@ -17,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestOnlineService extends IntentService {
     boolean connected =false;
     ReentrantLock lock=new ReentrantLock();
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -43,6 +44,8 @@ public class TestOnlineService extends IntentService {
         super.onDestroy();
 
     }
+
+
 
     private void sendBroadcastMessage(boolean connected) {
         try {
@@ -106,6 +109,7 @@ public class TestOnlineService extends IntentService {
                         lock.unlock();
                         sendBroadcastMessage(connected);
                     }
+
                 }
 
             }
