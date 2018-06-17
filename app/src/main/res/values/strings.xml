@@ -4,4 +4,8 @@
     <string name="enter_pawword">Enter Pawword</string>
     <string name="enter_login">Enter Login</string>
     <string name="log_in">Log in</string>
+    <string name="title_activity_signup">signup</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_email">Enter email</string>
+    <string name="reenter_password"> Repeat password </string>
 </resources>
