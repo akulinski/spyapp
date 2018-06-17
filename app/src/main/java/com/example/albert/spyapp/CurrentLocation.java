@@ -57,8 +57,8 @@ public class CurrentLocation extends Activity implements View.OnClickListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         //Asking for access to the location
-        permission = new Permission(this);
-        permission.request();
+        permission = new Permission(this, this);
+        if (!permission.checkPermissions()) permission.request();
     }
 
     @SuppressLint("MissingPermission")
