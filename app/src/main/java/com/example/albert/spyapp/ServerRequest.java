@@ -21,7 +21,7 @@ public class ServerRequest {
     StringBuilder responseStrBuilder;
 
 
-    private String returnedValue;
+    private String returnedValue="";
 
     ServerRequest(String u)
     {
@@ -29,14 +29,8 @@ public class ServerRequest {
             url=new URL(u);
             urlConnection = (HttpURLConnection) url.openConnection();
 
-            in =new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            responseStrBuilder = new StringBuilder();
 
-            addToStringBuilder();
-
-            returnedValue= new Gson().fromJson(responseStrBuilder.toString(),String.class);
-
-            responseStrBuilder.delete(0, responseStrBuilder.length());
+            urlConnection.disconnect();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -44,14 +38,31 @@ public class ServerRequest {
             e.printStackTrace();
         }
 
-
     }
+
+    public void makeTestRequest()
+    {
+        try {
+            in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            responseStrBuilder = new StringBuilder();
+            returnedValue= new Gson().fromJson(responseStrBuilder.toString(),String.class);
+            addToStringBuilder();
+
+            responseStrBuilder.delete(0, responseStrBuilder.length());
+
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
 
     private void addToStringBuilder() throws IOException {
         String inputStr;
         while ((inputStr = in.readLine()) != null)
             responseStrBuilder.append(inputStr);
 
+        returnedValue=responseStrBuilder.toString();
     }
 
     public void login(String login, String password){

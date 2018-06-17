@@ -42,14 +42,13 @@ public class TestOnlineService extends IntentService {
     }
 
     private void sendBroadcastMessage(boolean connected) {
-        if (connected) {
             Intent intent = new Intent();
             intent.setAction("com.example.albert.spyapp;");
 
             intent.putExtra("connected", connected);
 
             sendBroadcast(intent);
-        }
+
     }
 
     public void testConnection() {
@@ -60,11 +59,13 @@ public class TestOnlineService extends IntentService {
             public void run() {
 
                 while (true) {
-
+                    Log.d("While","started");
                     try
                     {
                         ServerRequest serverRequest=new ServerRequest(Urls.TEST.url);
-                        if (serverRequest.getReturnedValue().contains("{\"Success\":\"true\"}"))
+                        serverRequest.makeTestRequest();
+                        Log.d("serverRequest",serverRequest.getReturnedValue());
+                        if (serverRequest.getReturnedValue().equals("\"{\\\"Success\\\":\\\"true\\\"}\""))
                         {
                             connected=true;
                             Log.d("connected?","true");
@@ -75,12 +76,17 @@ public class TestOnlineService extends IntentService {
                         {
                             connected=false;
                             Log.d("connected?","false");
+                            sendBroadcastMessage(connected);
                         }
-                        Log.d("URL",serverRequest.getReturnedValue());
                     }
                     catch (SecurityException s)
                     {
                         s.getCause();
+                        Log.d("Securityexception",s.getMessage());
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.d("exception",ex.getLocalizedMessage());
                     }
 
                     try
