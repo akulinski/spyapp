@@ -8,9 +8,11 @@
 
 
     <RelativeLayout
-        android:layout_width="357dp"
-        android:layout_height="500dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="334dp"
+        android:layout_height="496dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -36,7 +38,7 @@
             android:hint="@string/enter_pawword"
             android:inputType="textPassword" />
 
-        <Button
+        <Button`
             android:id="@+id/loginbutton"
             android:layout_width="102dp"
             android:layout_height="wrap_content"
@@ -49,8 +51,9 @@
             android:id="@+id/regester"
             android:layout_width="112dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/Text"
+            android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/loginbutton"
+            android:layout_marginEnd="40dp"
             android:text="@string/regester" />
 
         <TextView
@@ -61,5 +64,6 @@
             android:layout_marginEnd="17dp"
             android:text="not connected"
             android:textColor="@android:color/holo_red_light" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

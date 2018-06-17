@@ -1,5 +1,6 @@
 package com.example.albert.spyapp;
 
+import android.text.Editable;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -7,7 +8,10 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+
 import java.net.ConnectException;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -62,6 +66,18 @@ public class ServerRequest {
         }
         catch (Exception ex){
             returnedValue="error";
+        }
+    }
+
+    public void login(String login, String password){
+        try {
+            urlConnection.setRequestProperty("Content-Type","application/json");
+            OutputStream os = urlConnection.getOutputStream();
+            String json =  "{\"name\": \""+login+"\",\"password\":\""+password+"\"}";
+            byte[] output = json.getBytes("UTF-8");
+            os.write(output);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
