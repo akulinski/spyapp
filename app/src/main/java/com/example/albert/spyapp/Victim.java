@@ -1,7 +1,5 @@
 package com.example.albert.spyapp;
 
-import com.example.albert.spyapp.User;
-
 import java.net.Inet4Address;
 import java.util.Date;
 

@@ -1,7 +1,5 @@
 package com.example.albert.spyapp;
 
-import com.example.albert.spyapp.User;
-
 import java.util.Date;
 
 public class Stalker extends User {
