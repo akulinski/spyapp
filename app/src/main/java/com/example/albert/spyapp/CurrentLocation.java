@@ -39,7 +39,7 @@ public class CurrentLocation extends Activity implements View.OnClickListener {
     private boolean gpsEnabled = false;
     private boolean networkEnabled = false;
 
-
+    private Permission permission = null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,8 @@ public class CurrentLocation extends Activity implements View.OnClickListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         //Asking for access to the location
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        permission = new Permission(this);
+        permission.request();
     }
 
     @SuppressLint("MissingPermission")
