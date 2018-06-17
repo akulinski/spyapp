@@ -12,6 +12,7 @@ import android.os.StrictMode;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +45,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.connected);
-
+        logbutton = (Button)findViewById(R.id.loginbutton);
+        login = (EditText)findViewById(R.id.Text);
+        password = (EditText)findViewById(R.id.password);
+        logbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
+                password.setText("");
+                login.setText("");
+                System.out.println(req.login());
+                if(req.login().equals("")) login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
+                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+            }
+        });
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
