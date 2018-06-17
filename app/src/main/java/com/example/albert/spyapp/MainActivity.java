@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText login;
     private EditText password;
     private Button logbutton;
+
+    private Button signup;
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
 
@@ -44,10 +48,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.connected);
-
+        signup = (Button) findViewById(R.id.regester);
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
+
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService(new Intent(v.getContext(), TestOnlineService.class));
+                Intent intent = new Intent(v.getContext(),signUp.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -65,20 +79,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        startService(new Intent(this, TestOnlineService.class));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        stopService(new Intent(this, TestOnlineService.class));
     }
 
     class MyBroadCastReceiver extends BroadcastReceiver
