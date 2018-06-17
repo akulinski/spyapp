@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button logbutton;
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
+    private Permission permission;
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
 
     @Override
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
-
+        permission = new Permission(this);
+        permission.request();
     }
 
 
