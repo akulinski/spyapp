@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
-        permission = new Permission(this);
-        permission.request();
+        permission = new Permission(this, this);
+        if (!permission.checkPermissions()) permission.request();
     }
 
 
