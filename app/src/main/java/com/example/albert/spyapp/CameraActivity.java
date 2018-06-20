@@ -1,22 +1,18 @@
 package com.example.albert.spyapp;
 
 import android.content.Intent;
-import android.graphics.Camera;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import android.support.v7.app.AppCompatActivity;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import java.security.Policy.Parameters;
 
 public class CameraActivity extends AppCompatActivity {
     private Button button;
     private ImageView imageView;
     Intent service;
+    Permission permission;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         service = new Intent(getBaseContext(), CapturePhoto.class);
@@ -30,6 +26,8 @@ public class CameraActivity extends AppCompatActivity {
                 startService(service);
             }
         });
+        permission = new Permission(this, this);
+        if (!permission.checkPermissions()) permission.request();
     }
 
 }
