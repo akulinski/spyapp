@@ -17,7 +17,7 @@ public class CameraActivity extends AppCompatActivity {
         service = new Intent(getBaseContext(), CapturePhoto.class);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
-        button = (Button)findViewById(R.id.record);
+        button = (Button)findViewById(R.id.button);
         imageView = (ImageView)findViewById(R.id.imageView3);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
