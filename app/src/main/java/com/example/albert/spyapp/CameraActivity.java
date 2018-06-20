@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Camera;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.View;

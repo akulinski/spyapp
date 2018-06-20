@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText login;
     private EditText password;
     private Button logbutton;
+    private Button signup;
+
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
 
@@ -57,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(req.login());
                 if(req.login().equals("")) login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
                 else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+            }
+        });
+
+        signup=(Button)findViewById(R.id.regester);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),MapsActivity.class);
+
+                startActivity(intent);
             }
         });
         super.onResume();
