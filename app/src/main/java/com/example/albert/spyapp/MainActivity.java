@@ -1,34 +1,18 @@
 package com.example.albert.spyapp;
 
-import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Handler;
-import android.os.StrictMode;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,17 +21,19 @@ public class MainActivity extends AppCompatActivity {
     private EditText login;
     private EditText password;
     private Button logbutton;
+    private Button signupbutton;
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_screen);
         textView = (TextView)findViewById(R.id.connected);
         logbutton = (Button)findViewById(R.id.loginbutton);
-        login = (EditText)findViewById(R.id.Text);
-        password = (EditText)findViewById(R.id.password);
+        login = (EditText)findViewById(R.id.logintextfield);
+        password = (EditText)findViewById(R.id.passwordtextfield);
+        signupbutton = (Button)findViewById(R.id.signupbutton);
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(req.login());
                 if(req.login().equals("")) login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
                 else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+            }
+        });
+        signupbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),signUp.class);
+                startActivity(i);
             }
         });
         super.onResume();

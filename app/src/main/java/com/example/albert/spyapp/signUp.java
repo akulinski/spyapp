@@ -25,14 +25,14 @@ public class signUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.signup_screen);
 
-        confirm = findViewById(R.id.confirmSignUp);
+        confirm = findViewById(R.id.confirm_su);
 
-        login = findViewById(R.id.username);
-        email = findViewById(R.id.enteremail);
-        password = findViewById(R.id.password);
-        repassword = findViewById(R.id.passwordrenter);
+        login = findViewById(R.id.login_su);
+        email = findViewById(R.id.email_su);
+        password = findViewById(R.id.password_su);
+        repassword = findViewById(R.id.passwordagain_su);
 
 
         confirm.setOnClickListener(new View.OnClickListener() {

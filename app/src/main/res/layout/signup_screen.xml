@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="381dp"
+        android:layout_height="649dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            android:id="@+id/imageView_su"
+            android:layout_width="wrap_content"
+            android:layout_height="92dp"
+            app:srcCompat="@drawable/signup_1080"
+            android:contentDescription="@string/todo" />
+
+        <EditText
+            android:id="@+id/login_su"
+            android:layout_width="219dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="133dp"
+            android:background="@drawable/texteditshape"
+            android:hint="@string/enter_login"
+            android:inputType="text"
+            android:padding="20dp" />
+
+        <EditText
+            android:id="@+id/email_su"
+            android:layout_width="213dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="171dp"
+            android:background="@drawable/texteditshape"
+            android:ems="10"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"
+            android:padding="20dp" />
+
+        <EditText
+            android:id="@+id/password_su"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="228dp"
+            android:background="@drawable/texteditshape"
+            android:hint="@string/enter_password"
+            android:inputType="textPassword"
+            android:padding="20dp" />
+
+        <EditText
+            android:id="@+id/passwordagain_su"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="265dp"
+            android:background="@drawable/texteditshape"
+            android:hint="@string/reenter_password"
+            android:inputType="textPassword"
+            android:padding="20dp" />
+
+        <Button
+            android:id="@+id/confirm_su"
+            android:layout_width="118dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="90dp"
+            android:background="@drawable/buttonshape"
+            android:text="@string/confirm"
+            android:textColor="#f2f2f2" />
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
