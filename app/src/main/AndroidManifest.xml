@@ -31,7 +31,6 @@
             android:value="@string/google_maps_key"/>
 
 
-        <activity android:name=".CurrentLocation">
 
         <activity android:name=".MainActivity">
             <intent-filter>

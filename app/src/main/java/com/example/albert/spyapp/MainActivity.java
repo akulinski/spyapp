@@ -16,8 +16,7 @@ import android.widget.TextView;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MainActivity extends AppCompatActivity {
-    private ReentrantLock lock;
-    private  TextView textView;
+    private TextView textView;
     private EditText login;
     private EditText password;
     private Button logbutton;
@@ -51,21 +50,14 @@ public class MainActivity extends AppCompatActivity {
         });
       
         signupbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),signUp.class);
-                startActivity(i);
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent i = new Intent(getApplicationContext(), signUp.class);
+                                                startActivity(i);
+                                            }
+                                        });
 
-        signup=(Button)findViewById(R.id.regester);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),MapsActivity.class);
 
-                startActivity(intent);
-
-            }
-        });
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
