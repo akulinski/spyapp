@@ -63,7 +63,6 @@ public class signUp extends AppCompatActivity {
         });
     }
 
-
     protected void hashPassword() {
         passwd = password.getText().toString();
         passwd = Hashing.sha256().hashString(passwd, StandardCharsets.UTF_8).toString();

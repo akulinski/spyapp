@@ -22,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText password;
     private Button logbutton;
     private Button signupbutton;
+
+    private Button signup;
+
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
+    private Permission permission;
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
 
     @Override
@@ -45,17 +49,28 @@ public class MainActivity extends AppCompatActivity {
                 else login.setText("zalogowano", TextView.BufferType.EDITABLE);
             }
         });
+      
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),signUp.class);
                 startActivity(i);
+
+        signup=(Button)findViewById(R.id.regester);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),MapsActivity.class);
+
+                startActivity(intent);
+
             }
         });
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
-
+        permission = new Permission(this, this);
+        if (!permission.checkPermissions()) permission.request();
     }
 
 

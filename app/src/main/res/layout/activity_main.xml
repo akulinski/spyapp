@@ -40,6 +40,9 @@
 
         <Button
             android:id="@+id/signupbutton"
+
+            android:id="@+id/loginbutton"
+
             android:layout_width="102dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
