@@ -39,7 +39,10 @@
             android:inputType="textPassword" />
 
         <Button
+            android:id="@+id/signupbutton"
+
             android:id="@+id/loginbutton"
+
             android:layout_width="102dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -52,7 +55,7 @@
             android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/loginbutton"
+            android:layout_alignTop="@+id/signupbutton"
             android:layout_marginEnd="40dp"
             android:text="@string/regester" />
 
