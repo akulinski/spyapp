@@ -44,7 +44,8 @@ public class signUp extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (checkpasswords()) {
+                if(checkEmptyFields()) showDialog("Fill in all the fields",false);
+                else if (checkpasswords()) {
                     hashPassword();
                     final ServerPost serverPost = new ServerPost(Urls.ADDSTALKER.url, v.getContext());
                     serverPost.addToPost("name", login.getText().toString());
@@ -71,15 +72,7 @@ public class signUp extends AppCompatActivity {
                         Log.d("passwordcheck",serverPost.getReturnedValue());
                         if(!serverPost.getReturnedValue().equals(" ")) {
                             Log.d("if","working");
-                            AlertDialog alertDialog = new AlertDialog.Builder(signUp.this)
-                                    .setMessage("Successfully signed up")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            signUp.this.onBackPressed();
-                                            finish();
-                                        }
-                                    }).show();
+                            showDialog("Successfully signed up",true);
                         }
 
                     } catch (InterruptedException e) {
@@ -88,9 +81,7 @@ public class signUp extends AppCompatActivity {
 
 
                 }else{
-                    debug.setText("Passwords do not match ");
-                    debug.setTextColor(Color.parseColor("#FF0000"));
-                    debug.setVisibility(View.VISIBLE);
+                    showDialog("Passwords do not match",false);
                 }
             }
         });
@@ -111,6 +102,26 @@ public class signUp extends AppCompatActivity {
         password.setText("");
         repassword.setText("");
         email.setText("");
+    }
+
+    private boolean checkEmptyFields(){
+        if(login.getText().toString().equals("") ||
+           password.getText().toString().equals("") ||
+           repassword.getText().toString().equals("") ||
+           email.getText().toString().equals(""))
+            return true;
+        else return false;
+    }
+
+    private void showDialog(String message, final boolean closeActvity){
+        AlertDialog alertDialog = new AlertDialog.Builder(signUp.this)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if(closeActvity) signUp.this.onBackPressed();
+                    }
+                }).show();
     }
 
 
