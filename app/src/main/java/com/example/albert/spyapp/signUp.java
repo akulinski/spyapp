@@ -1,5 +1,7 @@
 package com.example.albert.spyapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -69,8 +71,15 @@ public class signUp extends AppCompatActivity {
                         Log.d("passwordcheck",serverPost.getReturnedValue());
                         if(!serverPost.getReturnedValue().equals(" ")) {
                             Log.d("if","working");
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            AlertDialog alertDialog = new AlertDialog.Builder(signUp.this)
+                                    .setMessage("Successfully signed up")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            signUp.this.onBackPressed();
+                                            finish();
+                                        }
+                                    }).show();
                         }
 
                     } catch (InterruptedException e) {
