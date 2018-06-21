@@ -1,5 +1,7 @@
 package com.example.albert.spyapp;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +24,7 @@ public class signUp extends AppCompatActivity {
     private EditText password;
     private EditText repassword;
     private String passwd = "";
-
+    private EditText debug;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class signUp extends AppCompatActivity {
         email = findViewById(R.id.email_su);
         password = findViewById(R.id.password_su);
         repassword = findViewById(R.id.passwordagain_su);
-
+        debug = findViewById(R.id.debug);
 
         confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -60,6 +62,26 @@ public class signUp extends AppCompatActivity {
                         }
                     });
                     th.run();
+
+                    try {
+                        th.join();
+                        debug.setVisibility(View.INVISIBLE);
+                        Log.d("passwordcheck",serverPost.getReturnedValue());
+                        if(!serverPost.getReturnedValue().equals(" ")) {
+                            Log.d("if","working");
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else{
+                    debug.setText("Passwords do not match ");
+                    debug.setTextColor(Color.parseColor("#FF0000"));
+                    debug.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -73,6 +95,13 @@ public class signUp extends AppCompatActivity {
     boolean checkpasswords() {
         return password.getText().toString().equals(repassword.getText().toString());
 
+    }
+
+    protected void clear(){
+        login.setText("");
+        password.setText("");
+        repassword.setText("");
+        email.setText("");
     }
 
 
