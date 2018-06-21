@@ -1,26 +1,31 @@
 package com.example.albert.spyapp;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.concurrent.locks.ReentrantLock;
+import com.google.common.hash.Hashing;
+
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textView;
+    private TextView textView,error;
     private EditText login;
     private EditText password;
     private Button logbutton;
     private Button signupbutton;
+    private ServerRequest req;
 
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
@@ -35,18 +40,35 @@ public class MainActivity extends AppCompatActivity {
         login = (EditText)findViewById(R.id.logintextfield);
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
+        error = (TextView)findViewById(R.id.error);
         logbutton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
-                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
+                req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+
+                        Hashing.sha256().hashString(password.getText().toString(), StandardCharsets.UTF_8).toString());
                 password.setText("");
                 login.setText("");
-                System.out.println(req.login());
-                if(req.login().equals(""))
-                    login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
-                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
-                Intent i = new Intent(getApplicationContext(),MainView.class);
-                startActivity(i);
+                error.setText("");
+                try {
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override protected Void doInBackground(Void... params) {
+                            req.login();
+                            return null;
+                        }
+                    }.execute().get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(req.getReturnedValue());
+                if(req.getReturnedValue().equals("\"\"")){
+                    error.setText("Wrong login or password");
+                } else {
+                    Intent i = new Intent(getApplicationContext(), MainView.class);
+                    startActivity(i);
+                }
             }
         });
       
@@ -104,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             try
             {
-                Log.d("received", "onReceive() called");
+                //Log.d("received", "onReceive() called");
 
 
 

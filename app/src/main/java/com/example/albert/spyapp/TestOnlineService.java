@@ -58,7 +58,7 @@ public class TestOnlineService extends IntentService {
             sendBroadcast(intent);
         }catch (Exception ex)
         {
-            Log.d("exception while sending","exec");
+//            Log.d("exception while sending","exec");
         }
 
         finally {
@@ -76,20 +76,20 @@ public class TestOnlineService extends IntentService {
             public void run() {
 
                 while (true) {
-                    Log.d("While", "started");
+//                    Log.d("While", "started");
                     try {
                         lock.lock();
                         ServerRequest serverRequest = new ServerRequest(Urls.TEST.url);
                         if (!serverRequest.getReturnedValue().equals("error")) {
                             serverRequest.makeTestRequest();
-                            Log.d("serverRequest", serverRequest.getReturnedValue());
+//                            Log.d("serverRequest", serverRequest.getReturnedValue());
                             if (serverRequest.getReturnedValue().equals("{\"success\":\"true\"}")) {
                                 connected = true;
-                                Log.d("connected?", "true");
-                                Log.d("Sending Broadcast", "true");
+//                                Log.d("connected?", "true");
+//                                Log.d("Sending Broadcast", "true");
                             } else {
                                 connected = false;
-                                Log.d("connected?", "false");
+//                                Log.d("connected?", "false");
                             }
                         }
                     }
@@ -97,13 +97,13 @@ public class TestOnlineService extends IntentService {
                         {
                             connected = false;
                             s.getCause();
-                            Log.d("Securityexception", s.getMessage());
+//                            Log.d("Securityexception", s.getMessage());
                         }
                     catch(Exception ex)
                         {
                             connected = false;
 
-                            Log.d("exception", ex.getLocalizedMessage());
+//                            Log.d("exception", ex.getLocalizedMessage());
                         }
                         finally {
                         lock.unlock();
