@@ -83,7 +83,7 @@ public class TestOnlineService extends IntentService {
                         if (!serverRequest.getReturnedValue().equals("error")) {
                             serverRequest.makeTestRequest();
                             Log.d("serverRequest", serverRequest.getReturnedValue());
-                            if (serverRequest.getReturnedValue().equals("\"{\\\"Success\\\":\\\"true\\\"}\"")) {
+                            if (serverRequest.getReturnedValue().equals("{\"success\":\"true\"}")) {
                                 connected = true;
                                 Log.d("connected?", "true");
                                 Log.d("Sending Broadcast", "true");

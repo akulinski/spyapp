@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
 
@@ -42,6 +43,11 @@ public class ServerPost {
     private String returnedValue="";
     private ReentrantLock lock=new ReentrantLock();
     private Context context;
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
     private Map<String, String> params;
 
     ServerPost(String url,Context c) {
@@ -89,9 +95,10 @@ public class ServerPost {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // TODO: Handle error
-
+                                Log.d("error",error.getMessage());
                             }
                         });
+
                 lock.unlock();
 
                 //used Singleton to increase performance

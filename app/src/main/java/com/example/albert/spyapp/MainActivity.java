@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
-//                password.setText("");
-//                login.setText("");
-//                System.out.println(req.login());
-//                if(req.login().equals(""))
-//                    login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
-//                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
+                password.setText("");
+                login.setText("");
+                System.out.println(req.login());
+                if(req.login().equals(""))
+                    login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
+                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
                 Intent i = new Intent(getApplicationContext(),MainView.class);
                 startActivity(i);
             }
