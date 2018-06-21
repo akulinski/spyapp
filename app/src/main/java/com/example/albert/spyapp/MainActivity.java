@@ -45,29 +45,35 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
-                req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+
-                        Hashing.sha256().hashString(password.getText().toString(), StandardCharsets.UTF_8).toString());
-                password.setText("");
-                login.setText("");
-                error.setText("");
-                try {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override protected Void doInBackground(Void... params) {
-                            req.login();
-                            return null;
-                        }
-                    }.execute().get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                if (password.getText().toString().equals("") || login.getText().toString().equals("")) {
+                    error.setText("Fill in all fields");
                 }
-                System.out.println(req.getReturnedValue());
-                if(req.getReturnedValue().equals("\"\"")){
-                    error.setText("Wrong login or password");
-                } else {
-                    Intent i = new Intent(getApplicationContext(), MainView.class);
-                    startActivity(i);
+                else{
+                    req = new ServerRequest(Urls.GETSTALKER.url + login.getText().toString() + "/" +
+                            Hashing.sha256().hashString(password.getText().toString(), StandardCharsets.UTF_8).toString());
+                    password.setText("");
+                    login.setText("");
+                    error.setText("");
+                    try {
+                        new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                req.login();
+                                return null;
+                            }
+                        }.execute().get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(req.getReturnedValue());
+                    if (req.getReturnedValue().equals("\"\"")) {
+                        error.setText("Wrong login or password");
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), MainView.class);
+                        startActivity(i);
+                    }
                 }
             }
         });
