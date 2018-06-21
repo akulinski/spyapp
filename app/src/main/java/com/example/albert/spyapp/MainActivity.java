@@ -1,8 +1,10 @@
 package com.example.albert.spyapp;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (password.getText().toString().equals("") || login.getText().toString().equals("")) {
-                    error.setText("Fill in all fields");
+                    showDialog("Fill in all fields");
                 }
                 else{
                     req = new ServerRequest(Urls.GETSTALKER.url + login.getText().toString() + "/" +
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     System.out.println(req.getReturnedValue());
                     if (req.getReturnedValue().equals("\"\"")) {
-                        error.setText("Wrong login or password");
+                        showDialog("Wrong login or password");
                     } else {
                         Intent i = new Intent(getApplicationContext(), MainView.class);
                         startActivity(i);
@@ -153,6 +155,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private void showDialog(String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {}
+                }).show();
+    }
+
 }
 
 
