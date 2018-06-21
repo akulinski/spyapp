@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private Button logbutton;
     private Button signupbutton;
 
-    private Button signup;
-
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
@@ -41,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
-                password.setText("");
-                login.setText("");
-                System.out.println(req.login());
-                if(req.login().equals("")) login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
-                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+//                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
+//                password.setText("");
+//                login.setText("");
+//                System.out.println(req.login());
+//                if(req.login().equals(""))
+//                    login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
+//                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+                Intent i = new Intent(getApplicationContext(),MainView.class);
+                startActivity(i);
             }
         });
       
@@ -55,17 +56,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),signUp.class);
                 startActivity(i);
-
-        signup=(Button)findViewById(R.id.regester);
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(v.getContext(),MapsActivity.class);
-
-                startActivity(intent);
-
             }
         });
+
+
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
         registerMyReceiver();
