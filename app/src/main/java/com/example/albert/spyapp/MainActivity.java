@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Button logbutton;
     private Button signupbutton;
 
-    private Button signup;
-
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
     MyBroadCastReceiver myBroadCastReceiver=new MyBroadCastReceiver();
@@ -40,23 +38,26 @@ public class MainActivity extends AppCompatActivity {
         logbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
-                password.setText("");
-                login.setText("");
-                System.out.println(req.login());
-                if(req.login().equals("")) login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
-                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+//                ServerRequest req = new ServerRequest(Urls.GETSTALKER.url+login.getText().toString()+"/"+password.getText().toString());
+//                password.setText("");
+//                login.setText("");
+//                System.out.println(req.login());
+//                if(req.login().equals(""))
+//                    login.setText("nie zalogowano", TextView.BufferType.EDITABLE);
+//                else login.setText("zalogowano", TextView.BufferType.EDITABLE);
+                Intent i = new Intent(getApplicationContext(),MainView.class);
+                startActivity(i);
             }
         });
       
         signupbutton.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent i = new Intent(getApplicationContext(), signUp.class);
-                                                startActivity(i);
-                                            }
-                                        });
-
+          
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),signUp.class);
+                startActivity(i);
+            }
+        });
 
         super.onResume();
         startService(new Intent(this, TestOnlineService.class));
