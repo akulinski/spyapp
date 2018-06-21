@@ -24,8 +24,6 @@ public class ServerRequest {
     private HttpURLConnection urlConnection;
     BufferedReader in;
     StringBuilder responseStrBuilder;
-
-    String out;
     private String returnedValue="";
 
     ServerRequest(String u)
@@ -65,31 +63,16 @@ public class ServerRequest {
         setReturnedValue(responseStrBuilder.toString());
     }
 
-    public String login(){
-        // dodac timeout w reqescie
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try  {
-                    urlConnection.setRequestMethod("GET");
-                    in = new BufferedReader(new InputStreamReader((urlConnection.getInputStream())));
-                    addToStringBuilder();
-                    out = responseStrBuilder.toString();
-                    responseStrBuilder.setLength(0);
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
+    public void login(){
+        try  {
+            urlConnection.setRequestMethod("GET");
+            in = new BufferedReader(new InputStreamReader((urlConnection.getInputStream())));
+            addToStringBuilder();
+            responseStrBuilder.delete(0, responseStrBuilder.length());
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         urlConnection.disconnect();
-        return out;
     }
 
 

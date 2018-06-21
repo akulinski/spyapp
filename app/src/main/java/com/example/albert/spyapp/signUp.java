@@ -52,7 +52,7 @@ public class signUp extends AppCompatActivity {
                     serverPost.addToPost("dateOfJoining", timeStamp);
                     serverPost.addToPost("lastOnline", timeStamp);
                     serverPost.addToPost("password", passwd);
-                    Log.d("reg data",serverPost.getParams().toString());
+//                    Log.d("reg data",serverPost.getParams().toString());
                     Thread th = new Thread(new Runnable() {
                         @Override
                         public void run() {
