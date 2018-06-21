@@ -92,6 +92,7 @@ public class TestOnlineService extends IntentService {
 //                                Log.d("connected?", "false");
                             }
                         }
+                        Thread.sleep(1000);
                     }
                     catch(SecurityException s)
                         {
@@ -109,7 +110,6 @@ public class TestOnlineService extends IntentService {
                         lock.unlock();
                         sendBroadcastMessage(connected);
                     }
-
                 }
 
             }

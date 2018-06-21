@@ -16,10 +16,14 @@ import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class signUp extends AppCompatActivity {
 
     private Button confirm;
+    private Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     private EditText login;
     private EditText email;
@@ -58,30 +62,36 @@ public class signUp extends AppCompatActivity {
                     serverPost.addToPost("lastOnline", timeStamp);
                     serverPost.addToPost("password", passwd);
 //                    Log.d("reg data",serverPost.getParams().toString());
-                    Thread th = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            serverPost.postStalker();
-                        }
-                    });
-                    th.run();
+                    boolean emailMatch=checkEmail(email.getText().toString());
+                    if (!emailMatch) {
+                        showDialog("Enter correct email address", false);
 
-                    try {
-                        th.join();
-                        debug.setVisibility(View.INVISIBLE);
-                        Log.d("passwordcheck",serverPost.getReturnedValue());
-                        if(!serverPost.getReturnedValue().equals(" ")) {
-                            Log.d("if","working");
-                            showDialog("Successfully signed up",true);
+                    } else if(emailMatch) {
+                        Thread th = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                serverPost.postStalker();
+                            }
+                        });
+                        th.run();
+
+                        try {
+                            th.join();
+                            debug.setVisibility(View.INVISIBLE);
+                            Log.d("passwordcheck", serverPost.getReturnedValue());
+                            if (!serverPost.getReturnedValue().equals(" ")) {
+                                Log.d("if", "working");
+                                showDialog("Successfully signed up", true);
+                            }
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
-
-
-                }else{
-                    showDialog("Passwords do not match",false);
+                }
+                else{
+                    showDialog("Passwords do not match", false);
                 }
             }
         });
@@ -124,7 +134,10 @@ public class signUp extends AppCompatActivity {
                 }).show();
     }
 
-
+    public boolean checkEmail(String email) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
+    }
 }
 
 
