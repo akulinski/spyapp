@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public final class SingletonCookieManager {
 
     private static SingletonCookieManager cookieMenager;
-    private LinkedList<HttpCookie> cookies;
+    private LinkedList<Cookie> cookies;
 
     private SingletonCookieManager(){
 
@@ -19,14 +19,14 @@ public final class SingletonCookieManager {
         return cookieMenager;
     }
 
-    public void addCookie(HttpCookie cookie){
+    public void addCookie(Cookie cookie){
         cookies.add(cookie);
     }
 
-    private HttpCookie getCookie(String id){
+    private Cookie getCookie(String id){
 
-        for(HttpCookie cookie:cookies){
-          if(id.equals(cookie.getName()))
+        for(Cookie cookie:cookies){
+          if(id.equals(cookie.getKeyValue().get("sesionid")))
               return cookie;
         }
 

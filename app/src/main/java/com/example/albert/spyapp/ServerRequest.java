@@ -20,8 +20,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServerRequest {
@@ -83,12 +85,25 @@ public class ServerRequest {
             in = new BufferedReader(new InputStreamReader((urlConnection.getInputStream())));
             addToStringBuilder();
             responseStrBuilder.delete(0, responseStrBuilder.length());
-            urlConnection.getContent();
-            List<HttpCookie> cookies = cookieManager.getCookieStore().getCookies();
-            for (HttpCookie cookie : cookies) {
-                SingletonCookieManager.getInstance().addCookie(cookie);
+
+            Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+
+            Set<String> headerFieldsSet = headerFields.keySet();
+            Iterator<String> hearerFieldsIter = headerFieldsSet.iterator();
+
+            while (hearerFieldsIter.hasNext()) {
+                String headerFieldKey = hearerFieldsIter.next();
+                if ("Set-Cookie".equalsIgnoreCase(headerFieldKey)) {
+                    List<String> headerFieldValue = headerFields.get(headerFieldKey);
+                    for (String headerValue : headerFieldValue) {
+                        Log.d("found cookie: ",headerValue);
+
+                        Cookie cookie=new Cookie(headerValue);
+                    }
+                }
             }
-        } catch (Exception e) {
+
+            } catch (Exception e) {
             e.printStackTrace();
         }
         urlConnection.disconnect();
