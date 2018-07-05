@@ -12,7 +12,7 @@ public class LastLocationSingleton {
 
     private Cordinates lastcordinates;
 
-    private Cordinates getLastcordinates(){
+    public Cordinates getLastcordinates(){
         return lastcordinates;
     }
 

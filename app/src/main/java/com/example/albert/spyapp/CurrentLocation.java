@@ -1,9 +1,11 @@
 package com.example.albert.spyapp;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,6 +28,8 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
 
     private boolean networkEnabled = false;
     private Permission permission = null;
+    public static final String BROADCAST_ACTION = "com.example.albert.spyapp.gps;";
+    MyBroadCastReceiver myBroadCastReceiver = new MyBroadCastReceiver();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +45,8 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
         networkEnabled = isNetworkEnabled();
 
         if(!networkEnabled) { alertbox("You are not connected!", "Please turn on your network", "Turn on", 2); }
+        registerMyReciver();
+        startService(new Intent(this, ServiceCheckCoordinates.class));
     }
 
     //Network is enable or disable
@@ -78,7 +84,7 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        setLocation("51.40089", "16.20149");
+        //setLocation("51.40089", "16.20149");
     }
 
     //To set the mark.s
@@ -92,5 +98,24 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
         mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
     }
 
+    private void registerMyReciver() {
+        try {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BROADCAST_ACTION);
+            registerReceiver(myBroadCastReceiver, intentFilter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    class MyBroadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String coordinatex = intent.getStringExtra("coordinatesx");
+            String coordinatey = intent.getStringExtra("coordinatesy");
+            setLocation(coordinatex, coordinatey);
+        }
+    }
 
 }
