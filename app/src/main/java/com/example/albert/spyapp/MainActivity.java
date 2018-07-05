@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         error = (TextView)findViewById(R.id.error);
         cordsTest=(Button)findViewById(R.id.testCords);
 
+        LinksAgregator linksAgregator=new LinksAgregator("tomeczek",getApplicationContext());
+        linksAgregator.getLinks();
+
         logbutton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
             @Override

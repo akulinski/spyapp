@@ -6,7 +6,8 @@ enum Urls {
     GETSTALKER("http://35.204.80.21:4567/stalker/getStalker/"),
     UPDATEVICTIMPARAMS("http://35.204.80.21:4567/victim/updatesParams/:id"),
     ADDVIVTIM("http://35.204.80.21:4567/victim/addVictim"),
-    GETVICTIM("http://35.204.80.21:4567/victim/getVictim/:id/:name");
+    GETVICTIM("http://35.204.80.21:4567/victim/getVictim/:id/:name"),
+    GETLINKS("http://35.204.80.21:4567/stalker/links/");
 
     String url;
     Urls(String address) {
