@@ -21,7 +21,7 @@
             app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/takephoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Take Photo" />

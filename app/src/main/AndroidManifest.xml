@@ -47,6 +47,11 @@
             android:theme="@style/Main">
         </activity>
 
+        <activity
+            android:name=".CameraActivity"
+            android:theme="@style/Main">
+        </activity>
+
         <service
             android:name=".TestOnlineService"
             android:enabled="true" />

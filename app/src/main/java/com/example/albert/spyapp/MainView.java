@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 
 public class MainView extends AppCompatActivity {
     ImageButton maps;
+    ImageButton camera;
+    ImageButton sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,9 @@ public class MainView extends AppCompatActivity {
         if(getSupportActionBar()!=null)
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Spyapp</font>"));
         maps = (ImageButton)findViewById(R.id.maps);
+        camera = (ImageButton)findViewById(R.id.camera);
+        sound = (ImageButton)findViewById(R.id.sound);
+
         maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,5 +30,14 @@ public class MainView extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),CameraActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
