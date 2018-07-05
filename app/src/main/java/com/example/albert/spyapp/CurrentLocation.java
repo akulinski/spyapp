@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,8 +47,8 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
         networkEnabled = isNetworkEnabled();
 
         if(!networkEnabled) { alertbox("You are not connected!", "Please turn on your network", "Turn on", 2); }
-        registerMyReciver();
         startService(new Intent(this, ServiceCheckCoordinates.class));
+        registerMyReciver();
     }
 
     //Network is enable or disable
@@ -89,14 +91,14 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
 
     //To set the mark.s
     public void setLocation(String latitude, String longitude) {
-        double dLatitude = Double.parseDouble(latitude);
-        double dLongitude = Double.parseDouble(longitude);
+        Double dLatitude = Double.parseDouble(latitude);
+        Double dLongitude = Double.parseDouble(longitude);
 
         if (marker != null) marker.remove();
-        LatLng current = new LatLng(dLatitude, dLongitude);
+        LatLng current = new LatLng(dLatitude.doubleValue(), dLongitude.doubleValue());
         marker = mMap.addMarker(new MarkerOptions().position(current).title("Marker in current location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-    }
+   }
 
     private void registerMyReciver() {
         try {
@@ -108,13 +110,31 @@ public class CurrentLocation extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        startService(new Intent(this, ServiceCheckCoordinates.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        stopService(new Intent(this, ServiceCheckCoordinates.class));
+    }
+
 
     class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            System.out.println("erfewrgwretgerjkhbfwjkehfbnektrjg");
             String coordinatex = intent.getStringExtra("coordinatesx");
             String coordinatey = intent.getStringExtra("coordinatesy");
-            setLocation(coordinatex, coordinatey);
+            Log.d("cordinates",coordinatex);
+            System.out.println("cordinates "+coordinatex.substring(1));
+
+            setLocation(coordinatex.substring(1), coordinatey.substring(0, coordinatey.length()-2));
         }
     }
 
