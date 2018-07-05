@@ -51,6 +51,9 @@
             android:name=".TestOnlineService"
             android:enabled="true" />
         <service
+            android:name=".GetLocationFromServerService"
+            android:enabled="true" />
+        <service
             android:name=".CapturePhoto"
             android:enabled="true"
             android:exported="true">

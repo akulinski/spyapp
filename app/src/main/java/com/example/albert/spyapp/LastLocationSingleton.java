@@ -20,7 +20,7 @@ public class LastLocationSingleton {
 
     }
 
-    public void setLastLocation(Cordinates location){
+    public synchronized void setLastLocation(Cordinates location){
         lastcordinates=location;
     }
     synchronized static LastLocationSingleton getInstance(){
