@@ -101,14 +101,5 @@
             android:gravity="center"
             android:textColor="@color/red"/>
 
-        <Button
-            android:id="@+id/testCords"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="29dp"
-            android:layout_marginTop="128dp"
-            android:text="TestCords" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

