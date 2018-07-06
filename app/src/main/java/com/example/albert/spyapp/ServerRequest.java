@@ -13,18 +13,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ServerRequest {
+    private static final String COOKIES_HEADER = "sesionid";
     private URL url;
     private HttpURLConnection urlConnection;
     BufferedReader in;
     StringBuilder responseStrBuilder;
     private String returnedValue="";
+
+    private CookieManager cookieManager = new CookieManager();
+
+
+
 
     ServerRequest(String u)
     {
@@ -32,6 +45,9 @@ public class ServerRequest {
             url = new URL(u);
             urlConnection = (HttpURLConnection) url.openConnection();
             responseStrBuilder = new StringBuilder();
+
+            CookieHandler.setDefault(cookieManager);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,12 +85,29 @@ public class ServerRequest {
             in = new BufferedReader(new InputStreamReader((urlConnection.getInputStream())));
             addToStringBuilder();
             responseStrBuilder.delete(0, responseStrBuilder.length());
-        } catch (Exception e) {
+
+            Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+
+            Set<String> headerFieldsSet = headerFields.keySet();
+            Iterator<String> hearerFieldsIter = headerFieldsSet.iterator();
+
+            while (hearerFieldsIter.hasNext()) {
+                String headerFieldKey = hearerFieldsIter.next();
+                if ("Set-Cookie".equalsIgnoreCase(headerFieldKey)) {
+                    List<String> headerFieldValue = headerFields.get(headerFieldKey);
+                    for (String headerValue : headerFieldValue) {
+                        Log.d("found cookie: ",headerValue);
+
+                        Cookie cookie=new Cookie(headerValue);
+                    }
+                }
+            }
+
+            } catch (Exception e) {
             e.printStackTrace();
         }
         urlConnection.disconnect();
     }
-
 
     public String getReturnedValue() {
         return returnedValue;

