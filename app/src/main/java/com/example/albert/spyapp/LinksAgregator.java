@@ -19,7 +19,6 @@ public class LinksAgregator {
     private Context context;
 
     LinksAgregator(String stalker, Context context){
-
         this.stalker=stalker;
         links=new LinkedList<>();
         this.context=context;
@@ -28,7 +27,6 @@ public class LinksAgregator {
 
 
     public void getLinks(){
-
         Log.d("response getting links","links");
         String url=Urls.GETLINKS.url;
         url+=stalker;
