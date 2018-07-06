@@ -52,8 +52,8 @@ public class CapturePhoto extends Service {
             List<Size> sizes = parameters.getSupportedPictureSizes();
             Size mSize = null;
             for (Size size : sizes) {
-                mSize = size;
-                break;
+                if(mSize == null || mSize.width < size.width)
+                    mSize = size;
             }
             parameters.setPictureSize(mSize.width, mSize.height);
             parameters.setRotation(270);
