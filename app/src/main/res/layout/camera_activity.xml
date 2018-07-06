@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="344dp"
-        android:layout_height="495dp"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:layout_width="381dp"
+        android:layout_height="649dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444">
+
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="441dp"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+            android:id="@+id/picture"
+            android:layout_width="335dp"
+            android:layout_height="468dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="69dp"
+            app:srcCompat="?attr/colorBackgroundFloating" />
 
         <Button
-            android:id="@+id/takephoto"
-            android:layout_width="match_parent"
+            android:id="@+id/prevButton"
+            android:layout_width="105dp"
             android:layout_height="wrap_content"
-            android:text="Take Photo" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/picture"
+            android:layout_marginBottom="45dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#f2f2f2"
+            android:text="Prev" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/picture"
+            android:layout_alignTop="@+id/prevButton"
+            android:background="@drawable/buttonshape"
+            android:text="Next"
+            android:textColor="#f2f2f2" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

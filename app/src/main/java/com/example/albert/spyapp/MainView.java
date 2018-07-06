@@ -21,7 +21,6 @@ public class MainView extends AppCompatActivity {
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Spyapp</font>"));
         maps = (ImageButton)findViewById(R.id.maps);
         camera = (ImageButton)findViewById(R.id.camera);
-        sound = (ImageButton)findViewById(R.id.sound);
 
         maps.setOnClickListener(new View.OnClickListener() {
             @Override

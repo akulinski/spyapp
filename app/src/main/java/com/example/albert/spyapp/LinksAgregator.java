@@ -38,11 +38,16 @@ public class LinksAgregator {
                     @Override
                     public void onResponse(String response) {
                         Log.d("links",response);
-                        String[] parts = response.split("\n");
+                        String res = response.substring(1,response.length()-2);
+                        String[] parts = res.split("\\^");
 
                         for(int i=0;i<parts.length;i++){
+                            parts[i] = parts[i].replace('_','/');
                             links.add(parts[i]);
                             Log.d("link",parts[i]);
+                            System.out.println("----------");
+                            System.out.println(parts[i]);
+                            System.out.println("----------");
                         }
 
                     }
@@ -55,6 +60,14 @@ public class LinksAgregator {
 
         queue.add(stringRequest);
 
+    }
+
+    String getLink(int i){
+        return links.get(i);
+    }
+
+    int getSize(){
+        return links.size();
     }
 
 }
