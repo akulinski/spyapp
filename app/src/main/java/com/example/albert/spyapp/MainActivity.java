@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         signupbutton = (Button)findViewById(R.id.signupbutton);
         error = (TextView)findViewById(R.id.error);
 
-        LinksAgregator linksAgregator=new LinksAgregator("tomeczek",getApplicationContext());
-        linksAgregator.getLinks();
 
         logbutton.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
