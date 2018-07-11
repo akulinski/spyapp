@@ -9,10 +9,10 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-    <style name="Main" parent="Theme.AppCompat.Light">
+    <style name="Main" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#595959</item>
-        <item name="colorPrimaryDark">#353535</item>
+        <item name="colorPrimary">#cecece</item>
+        <item name="colorPrimaryDark">#adadad</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

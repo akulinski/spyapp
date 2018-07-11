@@ -6,10 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -26,7 +30,9 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 
-public class CameraActivity extends AppCompatActivity {
+import javax.annotation.Nullable;
+
+public class CameraActivity extends Fragment {
     private Button prev;
     private Button next;
     private ImageView photo;
@@ -35,18 +41,19 @@ public class CameraActivity extends AppCompatActivity {
     private String stalker;
     static LinkedList<String> photosLinks;
     private RequestQueue queue;
-    @SuppressLint("StaticFieldLeak")
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView( LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.camera_activity, parent, false);
         photosLinks = new LinkedList<>();
         this.stalker = "tomeczek";
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this.getContext());
         index = 0;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera_activity);
-        prev = (Button)findViewById(R.id.prevButton);
-        next = (Button)findViewById(R.id.nextButton);
-        photo = (ImageView)findViewById(R.id.picture);
+        prev = (Button)rootView.findViewById(R.id.prevButton);
+        next = (Button)rootView.findViewById(R.id.nextButton);
+        photo = (ImageView)rootView.findViewById(R.id.picture);
 
         getLinks(new Callback() {
             @Override
@@ -68,6 +75,7 @@ public class CameraActivity extends AppCompatActivity {
 //        System.out.println("--------"+links.getSize()+"--------");
 
         prev.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
                 try {
@@ -104,6 +112,7 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         next.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
                 try {
@@ -137,7 +146,10 @@ public class CameraActivity extends AppCompatActivity {
 
             }
         });
+
+        return rootView;
     }
+
 
     public void getLinks(final Callback onCallBack){
         Log.d("response getting links","links");

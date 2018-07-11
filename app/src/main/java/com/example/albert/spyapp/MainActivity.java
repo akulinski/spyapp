@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     if (req.getReturnedValue().equals("\"\"")) {
                         showDialog("Wrong login or password");
                     } else {
-                        Intent i = new Intent(getApplicationContext(), MainView.class);
+                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(i);
                     }
                 }
