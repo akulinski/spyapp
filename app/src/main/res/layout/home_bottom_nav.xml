@@ -8,7 +8,7 @@
 
         <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:id="@+id/bottomHomeNavBar"
             android:background="@drawable/white_grey_border_top"
             app:menu="@menu/bottom_nav_menu"
