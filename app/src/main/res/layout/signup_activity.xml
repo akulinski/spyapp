@@ -9,7 +9,6 @@
         android:layout_height="match_parent"
         android:id="@+id/mainLay">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -28,49 +27,58 @@
             android:showDividers="middle">
 
             <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/icon" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="log in or sign up to continue" />
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/signup" />
 
             <EditText
-                android:id="@+id/logintextfield"
-                android:layout_width="299dp"
+                android:id="@+id/login_su"
+                android:layout_width="219dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/texteditshape"
-                android:ems="10"
                 android:hint="@string/enter_login"
-                android:inputType="textPersonName"
-                android:padding="20dp"
-                android:textSize="17sp" />
+                android:inputType="text"
+                android:padding="20dp" />
 
             <EditText
-                android:id="@+id/passwordtextfield"
-                android:layout_width="299dp"
+                android:id="@+id/email_su"
+                android:layout_width="213dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/texteditshape"
                 android:ems="10"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:padding="20dp" />
+
+            <EditText
+                android:id="@+id/password_su"
+                android:layout_width="214dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:padding="20dp"
-                android:textSize="17sp" />
+                android:padding="20dp" />
 
-            <TextView
-                android:id="@+id/connected"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/passwordagain_su"
+                android:layout_width="217dp"
                 android:layout_height="wrap_content"
-                android:text="not connected"
-                android:textColor="@color/red" />
+                android:background="@drawable/texteditshape"
+                android:hint="@string/reenter_password"
+                android:inputType="textPassword"
+                android:padding="20dp" />
+
+            <Button
+                android:id="@+id/confirm_su"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonshape"
+                android:text="@string/confirm"
+                android:textColor="#f2f2f2" />
 
         </LinearLayout>
 
-        <include layout="@layout/startview_botton_nav" />
 
 
     </RelativeLayout>
