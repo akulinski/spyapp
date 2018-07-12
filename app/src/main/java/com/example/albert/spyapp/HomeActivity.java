@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.maps.SupportMapFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class HomeActivity extends AppCompatActivity {
@@ -70,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(SupportMapFragment.newInstance(), "maps");
+        adapter.addFragment(new CurrentLocationFragment(), "maps");
         adapter.addFragment(new PhotosFragment(),"camera");
         adapter.addFragment(new ObserveesFragment(),"observees");
         adapter.addFragment(new SettingsFragment(),"settings");
