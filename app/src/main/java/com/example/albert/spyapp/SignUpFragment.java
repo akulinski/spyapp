@@ -2,8 +2,6 @@ package com.example.albert.spyapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +17,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class signUp extends AppCompatActivity {
+public class SignUpFragment extends AppCompatActivity {
 
     private Button confirm;
     private Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -124,12 +122,12 @@ public class signUp extends AppCompatActivity {
     }
 
     private void showDialog(String message, final boolean closeActvity){
-        AlertDialog alertDialog = new AlertDialog.Builder(signUp.this)
+        AlertDialog alertDialog = new AlertDialog.Builder(SignUpFragment.this)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(closeActvity) signUp.this.onBackPressed();
+                        if(closeActvity) SignUpFragment.this.onBackPressed();
                     }
                 }).show();
     }

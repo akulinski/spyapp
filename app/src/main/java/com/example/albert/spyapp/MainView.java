@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainView extends AppCompatActivity {
@@ -33,7 +32,7 @@ public class MainView extends AppCompatActivity {
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),CameraActivity.class);
+                Intent i = new Intent(getApplicationContext(),PhotosFragment.class);
                 startActivity(i);
             }
         });
