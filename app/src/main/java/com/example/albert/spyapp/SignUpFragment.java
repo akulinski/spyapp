@@ -2,8 +2,7 @@ package com.example.albert.spyapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class signUp extends AppCompatActivity {
+public class SignUpFragment extends AppCompatActivity {
 
     private Button confirm;
     private Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -33,8 +32,12 @@ public class signUp extends AppCompatActivity {
     private EditText debug;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_screen);
+        setContentView(R.layout.signup_activity);
 
         confirm = findViewById(R.id.confirm_su);
 
@@ -42,7 +45,6 @@ public class signUp extends AppCompatActivity {
         email = findViewById(R.id.email_su);
         password = findViewById(R.id.password_su);
         repassword = findViewById(R.id.passwordagain_su);
-        debug = findViewById(R.id.debug);
 
         confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -124,12 +126,12 @@ public class signUp extends AppCompatActivity {
     }
 
     private void showDialog(String message, final boolean closeActvity){
-        AlertDialog alertDialog = new AlertDialog.Builder(signUp.this)
+        AlertDialog alertDialog = new AlertDialog.Builder(SignUpFragment.this)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(closeActvity) signUp.this.onBackPressed();
+                        if(closeActvity) SignUpFragment.this.onBackPressed();
                     }
                 }).show();
     }

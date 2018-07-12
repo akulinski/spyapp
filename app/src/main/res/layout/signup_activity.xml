@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainLay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/relLey1">
+            <include layout="@layout/home_top_tabs"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/relLey2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relLey1"
+            android:divider="@drawable/horizontal_divider"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
+                app:srcCompat="@drawable/signup" />
+
+            <EditText
+                android:id="@+id/login_su"
+                android:layout_width="219dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:hint="@string/enter_login"
+                android:inputType="text"
+                android:padding="20dp" />
+
+            <EditText
+                android:id="@+id/email_su"
+                android:layout_width="213dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:ems="10"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:padding="20dp" />
+
+            <EditText
+                android:id="@+id/password_su"
+                android:layout_width="214dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:padding="20dp" />
+
+            <EditText
+                android:id="@+id/passwordagain_su"
+                android:layout_width="217dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:hint="@string/reenter_password"
+                android:inputType="textPassword"
+                android:padding="20dp" />
+
+            <Button
+                android:id="@+id/confirm_su"
+                android:layout_width="118dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonshape"
+                android:text="@string/confirm"
+                android:textColor="#f2f2f2" />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
