@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainLay">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/relLey1">
+            <include layout="@layout/home_top_tabs"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/relLey2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relLey1"
+            android:divider="@drawable/horizontal_divider"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="log in or sign up to continue" />
+
+            <EditText
+                android:id="@+id/logintextfield"
+                android:layout_width="299dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:ems="10"
+                android:hint="@string/enter_login"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/passwordtextfield"
+                android:layout_width="299dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/texteditshape"
+                android:ems="10"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:padding="20dp"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/connected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="not connected"
+                android:textColor="@color/red" />
+
+        </LinearLayout>
+
+        <include layout="@layout/startview_botton_nav" />
+
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

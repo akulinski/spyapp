@@ -9,9 +9,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +22,8 @@ import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
-    private TextView textView,error;
+public class LoginScreen extends AppCompatActivity {
+    private TextView textView;
     private EditText login;
     private EditText password;
     private Button logbutton;
@@ -36,15 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            View decor = getWindow().getDecorView();
+            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.startview_activity);
         startService(new Intent(this,GetLocationFromServerService.class));
         textView = (TextView)findViewById(R.id.connected);
         logbutton = (Button)findViewById(R.id.loginbutton);
         login = (EditText)findViewById(R.id.logintextfield);
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
-        error = (TextView)findViewById(R.id.error);
 
 
         logbutton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                             Hashing.sha256().hashString(password.getText().toString(), StandardCharsets.UTF_8).toString());
                     password.setText("");
                     login.setText("");
-                    error.setText("");
                     try {
                         new AsyncTask<Void, Void, Void>() {
                             @Override
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
           
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),signUp.class);
+                Intent i = new Intent(getApplicationContext(),SignUpFragment.class);
                 startActivity(i);
             }
         });
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDialog(String message){
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+        AlertDialog alertDialog = new AlertDialog.Builder(LoginScreen.this)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
