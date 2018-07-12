@@ -25,7 +25,7 @@
             android:value="@string/google_maps_key"/>
 
         <activity
-            android:name=".CurrentLocation">
+            android:name=".CurrentLocationFragment">
         </activity>
 
 
