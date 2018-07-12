@@ -43,11 +43,6 @@
         </activity>
 
         <activity
-            android:name=".MainView"
-            android:theme="@style/Main">
-        </activity>
-
-        <activity
             android:name=".HomeActivity"
             android:theme="@style/Main">
         </activity>
