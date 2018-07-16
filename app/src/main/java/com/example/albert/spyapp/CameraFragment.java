@@ -7,16 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-public class LogoutFragment extends Fragment {
-    TextView text;
+import com.squareup.picasso.Picasso;
+
+
+public class CameraFragment extends Fragment {
+    ImageView img;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_temp, container, false);
-        text = rootView.findViewById(R.id.temp_text);
-        text.setText("LOGOUT");
+        View rootView = inflater.inflate(R.layout.camera_view, container, false);
+        img = rootView.findViewById(R.id.obrazeczek);
+        Picasso.with(getContext()).load("https://i.imgur.com/1JQuXvJ.jpg").into(img);
         return rootView;
+
     }
 }

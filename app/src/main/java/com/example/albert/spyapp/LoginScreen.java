@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class LoginScreen extends AppCompatActivity {
     private Button logbutton;
     private Button signupbutton;
     private ServerRequest req;
+    private CheckBox remPass;
 
     public static final String BROADCAST_ACTION = "com.example.albert.spyapp;";
     private Permission permission;
@@ -48,6 +50,9 @@ public class LoginScreen extends AppCompatActivity {
         login = (EditText)findViewById(R.id.logintextfield);
         password = (EditText)findViewById(R.id.passwordtextfield);
         signupbutton = (Button)findViewById(R.id.signupbutton);
+
+        // special checkbox for Albert
+        remPass = (CheckBox) findViewById(R.id.remPassCheckBox);
 
 
         logbutton.setOnClickListener(new View.OnClickListener() {
