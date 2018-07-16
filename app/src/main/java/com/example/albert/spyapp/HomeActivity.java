@@ -39,19 +39,15 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.ic_maps:
                         setViewPager(0);
-                        navbar.getMenu().getItem(0).setChecked(true);
                         break;
                     case R.id.ic_photos:
                         setViewPager(1);
-                        navbar.getMenu().getItem(1).setChecked(true);
                         break;
                     case R.id.ic_observees:
                         setViewPager(2);
-                        navbar.getMenu().getItem(2).setChecked(true);
                         break;
                     case R.id.ic_settings:
                         setViewPager(3);
-                        navbar.getMenu().getItem(3).setChecked(true);
                         break;
                     case R.id.ic_logout:
                         showLogoutDialog();
@@ -64,12 +60,12 @@ public class HomeActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                navbar.getMenu().getItem(position).setChecked(true);
+
             }
 
             @Override
             public void onPageSelected(int position) {
-
+                navbar.getMenu().getItem(position).setChecked(true);
             }
 
             @Override
