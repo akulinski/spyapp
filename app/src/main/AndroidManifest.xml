@@ -28,6 +28,10 @@
             android:name=".CurrentLocationFragment">
         </activity>
 
+        <activity
+            android:name=".ImageViewer">
+        </activity>
+
 
         <activity android:name=".LoginScreen">
             <intent-filter>

@@ -10,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -86,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CurrentLocationFragment(), "maps");
-        adapter.addFragment(new CameraFragment(),"camera");
+        adapter.addFragment(new GalleryFragment(),"camera");
         adapter.addFragment(new ObserveesFragment(),"observees");
         adapter.addFragment(new SettingsFragment(),"settings");
         viewPager.setAdapter(adapter);
