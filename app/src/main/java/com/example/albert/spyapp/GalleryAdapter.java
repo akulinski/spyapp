@@ -36,6 +36,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void update(){
+        notifyDataSetChanged();
+    }
+
     @Override
     public GalleryAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.gallery_item, viewGroup, false);

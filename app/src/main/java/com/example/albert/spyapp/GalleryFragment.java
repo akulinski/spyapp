@@ -16,8 +16,11 @@ import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
     private RecyclerView recyclerView;
-    public static ArrayList<Photo> createLists;
-    public static GalleryAdapter adapter;
+    private ArrayList<Photo> createLists;
+    private GalleryAdapter adapter;
+    public GalleryAdapter getAdapter() {
+        return adapter;
+    }
 
     @Nullable
     @Override
@@ -28,12 +31,21 @@ public class GalleryFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         recyclerView.setLayoutManager(layoutManager);
         createLists = new ArrayList<>();
-        createLists.add(new Photo("https://i.pinimg.com/736x/e8/b3/a0/e8b3a0244b14d5563b3868da15bec8f7.jpg"));
-        createLists.add(new Photo("http://www.dailymoss.com/wp-content/uploads/2018/01/0b6b2adc21c458186ee98909e34115f5.jpg"));
-        createLists.add(new Photo("http://www.dailymoss.com/wp-content/uploads/2018/01/oh-so-youre-a-programmer-tell-me-more-about-how-you-perform-your-job-without-basic-english-or-copy-p.jpg"));
-        createLists.add(new Photo("https://i.pinimg.com/736x/e8/b3/a0/e8b3a0244b14d5563b3868da15bec8f7.jpg"));
-        createLists.add(new Photo("https://img.buzzfeed.com/buzzfeed-static/static/2015-01/14/11/enhanced/webdr05/enhanced-21387-1421251318-7.jpg"));
-        createLists.add(new Photo("https://i.pinimg.com/736x/e8/b3/a0/e8b3a0244b14d5563b3868da15bec8f7.jpg"));
+        createLists.add(new Photo("https://cdn.pixabay.com/photo/2017/03/30/15/10/america-2188796_1280.jpg"));
+        createLists.add(new Photo("https://fajnepodroze.pl/wp-content/uploads/2017/11/Ameryka-Polnocna-ciekawostki-dla-dzieci.jpg"));
+        createLists.add(new Photo("https://i1.wp.com/1001miejsc.pl/wp-content/uploads/2016/02/Karkonosze.-Szrenica..jpg"));
+        createLists.add(new Photo("http://www.kohajone.com/wp-content/uploads/2017/08/mountain-sunset.jpg"));
+        createLists.add(new Photo("http://1.s.dziennik.pl/pliki/6700000/6700498-polska-krajobraz-najpiekniejsze-900-588.jpg"));
+        createLists.add(new Photo("https://i2.wp.com/1001miejsc.pl/wp-content/uploads/2016/02/Polskie-morze.-Ba%C5%82tyk..jpg"));
+        createLists.add(new Photo("https://static.panoramio.com.storage.googleapis.com/photos/large/66194572.jpg"));
+        createLists.add(new Photo("http://s8.flog.pl/media/foto/5982637_polskie-krajobrazy.jpg"));
+        createLists.add(new Photo("https://static.panoramio.com.storage.googleapis.com/photos/large/74067713.jpg"));
+        createLists.add(new Photo("http://www.krajobrazypolskie.pl/images/DSC01294R.jpg"));
+        createLists.add(new Photo("https://cdn.pixabay.com/photo/2015/10/29/13/30/mountains-1012368_1280.jpg"));
+        createLists.add(new Photo("https://www.reisetiger.net/wp-content/uploads/2016/05/Usedom-Strandbild-Travador.jpg"));
+        createLists.add(new Photo("https://d-nm.ppstatic.pl/kadr/k/r/54/c7/5a8d0b91bf870_o,size,933x0,q,70,h,55d151.jpg"));
+        createLists.add(new Photo("http://m.polskiekrajobrazy.pl/i/images/stories/big/dz03MzY=_src_231992IMG.jpg"));
+        createLists.add(new Photo("http://plfoto.com/zdjecia/947253.jpg"));
         adapter = new GalleryAdapter(getContext(), createLists);
         recyclerView.setAdapter(adapter);
         return rootView;

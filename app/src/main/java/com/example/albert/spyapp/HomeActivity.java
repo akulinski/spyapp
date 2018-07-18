@@ -16,8 +16,9 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class HomeActivity extends AppCompatActivity {
     ViewPager viewPager;
-    BottomNavigationViewEx navbar;
+    BottomNavigationViewEx navBar;
     PagerAdapter adapter;
+    GalleryFragment gallery;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -32,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         this.viewPager = (ViewPager)findViewById(R.id.container);
         setUpBottomNavbar();
         setupViewPager(this.viewPager);
-        navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                navbar.getMenu().getItem(position).setChecked(true);
+                navBar.getMenu().getItem(position).setChecked(true);
             }
 
             @Override
@@ -75,17 +76,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setUpBottomNavbar(){
-        navbar = (BottomNavigationViewEx)findViewById(R.id.bottomHomeNavBar);
-        navbar.enableAnimation(false);
-        navbar.enableItemShiftingMode(false);
-        navbar.enableShiftingMode(false);
-        navbar.setTextVisibility(true);
+        navBar = (BottomNavigationViewEx)findViewById(R.id.bottomHomeNavBar);
+        navBar.enableAnimation(false);
+        navBar.enableItemShiftingMode(false);
+        navBar.enableShiftingMode(false);
+        navBar.setTextVisibility(true);
     }
 
     private void setupViewPager(ViewPager viewPager){
+        gallery = new GalleryFragment();
         adapter = new PagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new CurrentLocationFragment(), "maps");
-        adapter.addFragment(new GalleryFragment(),"camera");
+        adapter.addFragment(gallery,"camera");
         adapter.addFragment(new ObserveesFragment(),"observees");
         adapter.addFragment(new SettingsFragment(),"settings");
         viewPager.setAdapter(adapter);
@@ -110,6 +112,7 @@ public class HomeActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+//                gallery.getAdapter().addPhoto(new Photo("https://i.pinimg.com/736x/e8/b3/a0/e8b3a0244b14d5563b3868da15bec8f7.jpg"));
                 dialog.dismiss();
             }
         });
