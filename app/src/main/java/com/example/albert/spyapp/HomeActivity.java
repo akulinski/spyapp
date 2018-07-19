@@ -14,11 +14,15 @@ import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
+
 public class HomeActivity extends AppCompatActivity {
-    ViewPager viewPager;
-    BottomNavigationViewEx navBar;
-    PagerAdapter adapter;
-    GalleryFragment gallery;
+    private ViewPager viewPager;
+    private BottomNavigationViewEx navBar;
+    private PagerAdapter adapter;
+    private GalleryFragment gallery;
+    private ObserveesFragment observeesFragment;
+    private CurrentLocationFragment currentLocationFragment;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -85,10 +89,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         gallery = new GalleryFragment();
+        currentLocationFragment = new CurrentLocationFragment();
+        observeesFragment = new ObserveesFragment();
         adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CurrentLocationFragment(), "maps");
+        adapter.addFragment(currentLocationFragment, "location");
         adapter.addFragment(gallery,"camera");
-        adapter.addFragment(new ObserveesFragment(),"observees");
+        adapter.addFragment(observeesFragment,"observees");
         adapter.addFragment(new SettingsFragment(),"settings");
         viewPager.setAdapter(adapter);
     }
