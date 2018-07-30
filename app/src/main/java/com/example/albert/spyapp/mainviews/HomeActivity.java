@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.mainviews;
+package com.example.albert.spyapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -12,18 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.albert.spyapp.R;
-import com.example.albert.spyapp.cookies.SingletonCookieManager;
-import com.example.albert.spyapp.cordinates.CurrentLocationFragment;
-import com.example.albert.spyapp.photo.GalleryFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import java.io.IOException;
+import afu.org.checkerframework.checker.oigj.qual.O;
 
 public class HomeActivity extends AppCompatActivity {
-    ViewPager viewPager;
-    BottomNavigationViewEx navbar;
-    PagerAdapter adapter;
+    private ViewPager viewPager;
+    private BottomNavigationViewEx navBar;
+    private PagerAdapter adapter;
+    private GalleryFragment gallery;
+    private ObserveesFragment observeesFragment;
+    private CurrentLocationFragment currentLocationFragment;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -38,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         this.viewPager = (ViewPager)findViewById(R.id.container);
         setUpBottomNavbar();
         setupViewPager(this.viewPager);
-        navbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
@@ -70,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                navbar.getMenu().getItem(position).setChecked(true);
+                navBar.getMenu().getItem(position).setChecked(true);
             }
 
             @Override
@@ -80,25 +79,22 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed(){
-        SingletonCookieManager.getInstance(getApplicationContext()).removeSession();
-        super.onBackPressed();
-    }
-
     private void setUpBottomNavbar(){
-        navbar = (BottomNavigationViewEx)findViewById(R.id.bottomHomeNavBar);
-        navbar.enableAnimation(false);
-        navbar.enableItemShiftingMode(false);
-        navbar.enableShiftingMode(false);
-        navbar.setTextVisibility(true);
+        navBar = (BottomNavigationViewEx)findViewById(R.id.bottomHomeNavBar);
+        navBar.enableAnimation(false);
+        navBar.enableItemShiftingMode(false);
+        navBar.enableShiftingMode(false);
+        navBar.setTextVisibility(true);
     }
 
     private void setupViewPager(ViewPager viewPager){
+        gallery = new GalleryFragment();
+        currentLocationFragment = new CurrentLocationFragment();
+        observeesFragment = new ObserveesFragment();
         adapter = new PagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CurrentLocationFragment(), "maps");
-        adapter.addFragment(new GalleryFragment(),"camera");
-        adapter.addFragment(new ObserveesFragment(),"observees");
+        adapter.addFragment(currentLocationFragment, "location");
+        adapter.addFragment(gallery,"camera");
+        adapter.addFragment(observeesFragment,"observees");
         adapter.addFragment(new SettingsFragment(),"settings");
         viewPager.setAdapter(adapter);
     }
@@ -122,34 +118,11 @@ public class HomeActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+//                gallery.getAdapter().addPhoto(new Photo("https://i.pinimg.com/736x/e8/b3/a0/e8b3a0244b14d5563b3868da15bec8f7.jpg"));
                 dialog.dismiss();
             }
         });
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    @Override
-    protected void onPause() {
-
-        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
-
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-
-        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
-
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
-        super.onDestroy();
-    }
-
 }
