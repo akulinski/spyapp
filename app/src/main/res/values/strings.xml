@@ -10,4 +10,5 @@
     <string name="reenter_password">password again</string>
     <string name="confirm">confirm</string>
     <string name="todo">TODO</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBF9dcrLzh_0nLggC2MbR9ivCHeu80rWIg</string>
 </resources>
