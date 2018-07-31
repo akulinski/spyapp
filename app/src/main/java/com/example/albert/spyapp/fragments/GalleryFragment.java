@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.photo;
+package com.example.albert.spyapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.albert.spyapp.R;
+import com.example.albert.spyapp.adapters.GalleryAdapter;
+import com.example.albert.spyapp.utils.Photo;
 
 import java.util.ArrayList;
 

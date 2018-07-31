@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.mainviews;
+package com.example.albert.spyapp.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

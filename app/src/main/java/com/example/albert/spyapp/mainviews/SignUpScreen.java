@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SignUpFragment extends AppCompatActivity {
+public class SignUpScreen extends AppCompatActivity {
 
     private Button confirm;
     private Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -129,12 +129,12 @@ public class SignUpFragment extends AppCompatActivity {
     }
 
     private void showDialog(String message, final boolean closeActvity){
-        AlertDialog alertDialog = new AlertDialog.Builder(SignUpFragment.this)
+        AlertDialog alertDialog = new AlertDialog.Builder(SignUpScreen.this)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(closeActvity) SignUpFragment.this.onBackPressed();
+                        if(closeActvity) SignUpScreen.this.onBackPressed();
                     }
                 }).show();
     }

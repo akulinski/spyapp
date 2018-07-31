@@ -1,4 +1,4 @@
-package com.example.albert.spyapp;
+package com.example.albert.spyapp.utils;
 
 public class Observee {
     private String login;

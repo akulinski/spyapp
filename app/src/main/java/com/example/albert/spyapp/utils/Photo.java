@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.photo;
+package com.example.albert.spyapp.utils;
 
 public class Photo {
 

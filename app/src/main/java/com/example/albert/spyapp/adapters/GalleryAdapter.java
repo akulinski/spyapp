@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.photo;
+package com.example.albert.spyapp.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.albert.spyapp.R;
+import com.example.albert.spyapp.photo.ImageViewer;
+import com.example.albert.spyapp.utils.Photo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
