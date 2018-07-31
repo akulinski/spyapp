@@ -1,24 +1,22 @@
-package com.example.albert.spyapp;
+package com.example.albert.spyapp.mainviews;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import com.example.albert.spyapp.Observee;
+import com.example.albert.spyapp.ObserveesAdapter;
+import com.example.albert.spyapp.R;
 import java.util.ArrayList;
 
-public class ObserveesFragment extends Fragment {
+public class ObserveesFragment extends android.support.v4.app.Fragment {
     RecyclerView recyclerView;
     ArrayList<Observee> createLists;
     ObserveesAdapter adapter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

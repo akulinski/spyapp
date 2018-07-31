@@ -1,4 +1,4 @@
-package com.example.albert.spyapp;
+package com.example.albert.spyapp.mainviews;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -12,9 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.albert.spyapp.R;
+import com.example.albert.spyapp.cookies.SingletonCookieManager;
+import com.example.albert.spyapp.cordinates.CurrentLocationFragment;
+import com.example.albert.spyapp.photo.GalleryFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-
-import afu.org.checkerframework.checker.oigj.qual.O;
 
 public class HomeActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -125,4 +127,33 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    @Override
+    protected void onPause() {
+
+        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+
+        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        SingletonCookieManager.getInstance(getApplicationContext()).saveToFile();
+        super.onDestroy();
+    }
+    @Override
+    public void onBackPressed(){
+        SingletonCookieManager.getInstance(getApplicationContext()).removeSession();
+        super.onBackPressed();
+    }
+
 }
