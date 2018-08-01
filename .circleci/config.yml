@@ -17,6 +17,12 @@ jobs:
     working_directory: ~/app/src/main/java
 
     environment:
+      checkout:
+      post:
+      - cp -r licenses/. $ANDROID_HOME/licenses
+      `
+      sdkmanager --update && yes | sdkmanager --licenses
+
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
@@ -62,9 +68,3 @@ jobs:
           - cp -r my-project/build/outputs $CIRCLE_ARTIFACTS
           # copy the test results to the test results directory.
           - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
-
-        checkout:
-        post:
-        - cp -r licenses/. $ANDROID_HOME/licenses
-
-        sdkmanager --update && yes | sdkmanager --licenses
