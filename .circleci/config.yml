@@ -6,6 +6,11 @@ version: 2
 jobs:
   build:
     docker:
+          checkout:
+          post:
+          - cp -r licenses/. $ANDROID_HOME/licenses
+          sdkmanager --update && yes | sdkmanager --licenses
+
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
 
@@ -17,12 +22,6 @@ jobs:
     working_directory: ~/app/src/main/java
 
     environment:
-      checkout:
-      post:
-      - cp -r licenses/. $ANDROID_HOME/licenses
-      `
-      sdkmanager --update && yes | sdkmanager --licenses
-
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
