@@ -47,8 +47,6 @@ jobs:
           checkout:
           post:
           - cp -r licenses/. $ANDROID_HOME/licenses
-          sdkmanager --update && yes | sdkmanager --licenses
-
       machine:
         environment:
           QEMU_AUDIO_DRV: none
