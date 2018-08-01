@@ -46,12 +46,6 @@ jobs:
       - checkout
 
       - run:
-          name: Wait for emulator
-          command: ./android-wait-for-boot.sh
-          environment:
-            TERM: dumb
-
-      - run:
           name: Remove lock screen
           command: adb shell input keyevent 82
           environment:
