@@ -4,61 +4,24 @@
 #
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+  #
+  # Build configuration for Circle CI
+  #
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+  general:
+      artifacts:
+          - /home/ubuntu/your-app-name/app/build/outputs/apk/
 
-    working_directory: ~/app/src/main/java
+  machine:
+      environment:
+          ANDROID_HOME: /usr/local/android-sdk-linux
 
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
+  dependencies:
+      override:
+          - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-21.1.2,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
+          - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
-      before_install:
-        - yes | sdkmanager "platforms;android-27"
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run tests!
-      - run: gradle test
-
-      machine:
-        environment:
-          QEMU_AUDIO_DRV: none
-
-      test:
-        override:
-          # start the emulator
-          - emulator -avd circleci-android24 -no-window:
-              background: true
-              parallel: true
-          # wait for it to have booted
-          - circle-android wait-for-boot
-          # run tests  against the emulator.
-          - ./gradlew connectedAndroidTest
-          # copy the build outputs to artifacts
-          - cp -r my-project/build/outputs $CIRCLE_ARTIFACTS
-          # copy the test results to the test results directory.
-          - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+  test:
+      override:
+          - (./gradlew assemble):
+              timeout: 360
