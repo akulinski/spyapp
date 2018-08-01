@@ -44,9 +44,6 @@ jobs:
       # run tests!
       - run: gradle test
 
-          checkout:
-          post:
-          - cp -r licenses/. $ANDROID_HOME/licenses
       machine:
         environment:
           QEMU_AUDIO_DRV: none
