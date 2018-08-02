@@ -3,3 +3,4 @@ set -xeuo pipefail
 
 ./gradlew clean
 ./gradlew assembleRelease
+./gradlew test
