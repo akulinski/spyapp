@@ -34,3 +34,5 @@ android:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+    - 'platforms;android-27 Android SDK Platform 27'
+    - 'build-tools;27.0.3 Android SDK Build-Tools 27.0.3'
