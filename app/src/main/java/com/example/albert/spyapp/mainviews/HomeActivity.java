@@ -13,9 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.albert.spyapp.R;
+import com.example.albert.spyapp.adapters.PagerAdapter;
 import com.example.albert.spyapp.cookies.SingletonCookieManager;
 import com.example.albert.spyapp.cordinates.CurrentLocationFragment;
-import com.example.albert.spyapp.photo.GalleryFragment;
+import com.example.albert.spyapp.fragments.ObserveesFragment;
+import com.example.albert.spyapp.fragments.SettingsFragment;
+import com.example.albert.spyapp.fragments.GalleryFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class HomeActivity extends AppCompatActivity {

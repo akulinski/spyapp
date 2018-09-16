@@ -1,19 +1,18 @@
-package com.example.albert.spyapp;
+package com.example.albert.spyapp.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Observable;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.albert.spyapp.utils.Observee;
+import com.example.albert.spyapp.R;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 import com.pes.androidmaterialcolorpickerdialog.ColorPickerCallback;
 

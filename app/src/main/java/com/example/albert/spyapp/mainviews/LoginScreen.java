@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.albert.spyapp.cookies.SingletonCookieManager;
 import com.example.albert.spyapp.utils.Permission;
@@ -29,7 +28,6 @@ import com.example.albert.spyapp.utils.Urls;
 import com.example.albert.spyapp.services.GetLocationFromServerService;
 import com.google.common.hash.Hashing;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutionException;
 
@@ -113,7 +111,7 @@ public class LoginScreen extends AppCompatActivity {
           
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),SignUpFragment.class);
+                Intent i = new Intent(getApplicationContext(),SignUpScreen.class);
                 startActivity(i);
             }
         });

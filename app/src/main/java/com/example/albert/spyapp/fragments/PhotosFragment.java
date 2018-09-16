@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.mainviews;
+package com.example.albert.spyapp.fragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package com.example.albert.spyapp.mainviews;
+package com.example.albert.spyapp.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
