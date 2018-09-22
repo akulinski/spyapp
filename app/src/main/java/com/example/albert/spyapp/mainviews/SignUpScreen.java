@@ -1,25 +1,38 @@
 package com.example.albert.spyapp.mainviews;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.albert.spyapp.R;
-import com.example.albert.spyapp.requests.ServerPost;
-import com.example.albert.spyapp.utils.Urls;
+import com.example.albert.spyapp.core.eventbus.GlobalEventBusSingleton;
+import com.example.albert.spyapp.core.events.StalkerAddedEvent;
+import com.example.albert.spyapp.core.events.StalkerAddingErrorEvent;
+import com.example.albert.spyapp.fragments.PhotosFragment;
+import com.example.albert.spyapp.requests.ApiClient;
+import com.example.albert.spyapp.requests.ApiInterface;
+import com.example.albert.spyapp.requests.callbacks.AddStalkerCallback;
+import com.example.albert.spyapp.services.TestOnlineService;
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
 
 public class SignUpScreen extends AppCompatActivity {
 
@@ -33,6 +46,16 @@ public class SignUpScreen extends AppCompatActivity {
     private EditText repassword;
     private String passwd = "";
     private EditText debug;
+    private ApiInterface apiService;
+    private EventBus eventBus;
+
+    public void subscribeToEventBus() {
+
+        eventBus = GlobalEventBusSingleton.getInstance().getEventBus();
+        eventBus.register(new StalkerAddedEventHandler());
+        eventBus.register(new StalkerAddingErrorEventHandler());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -48,56 +71,27 @@ public class SignUpScreen extends AppCompatActivity {
         email = findViewById(R.id.email_su);
         password = findViewById(R.id.password_su);
         repassword = findViewById(R.id.passwordagain_su);
+        apiService = ApiClient.getClient().create(ApiInterface.class);
+        subscribeToEventBus();
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+        confirm.setOnClickListener(v -> {
+            if (checkEmptyFields()) showDialog("Fill in all the fields", false);
+            else if (checkpasswords()) {
+                hashPassword();
 
-            @Override
-            public void onClick(View v) {
-                if(checkEmptyFields()) showDialog("Fill in all the fields",false);
-                else if (checkpasswords()) {
-                    hashPassword();
-                    final ServerPost serverPost = new ServerPost(Urls.ADDSTALKER.url, v.getContext());
-                    serverPost.addToPost("name", login.getText().toString());
+                boolean emailMatch = checkEmail(email.getText().toString());
+                if (!emailMatch) {
+                    showDialog("Enter correct email address", false);
 
-                    //date and id are figured out by server
-                    serverPost.addToPost("id", "1");
-                    serverPost.addToPost("email", email.getText().toString());
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-                    serverPost.addToPost("dateOfJoining", timeStamp);
-                    serverPost.addToPost("lastOnline", timeStamp);
-                    serverPost.addToPost("password", passwd);
-//                    Log.d("reg data",serverPost.getParams().toString());
-                    boolean emailMatch=checkEmail(email.getText().toString());
-                    if (!emailMatch) {
-                        showDialog("Enter correct email address", false);
+                } else {
 
-                    } else if(emailMatch) {
-                        Thread th = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                serverPost.postStalker();
-                            }
-                        });
-                        th.run();
-
-                        try {
-                            th.join();
-                            debug.setVisibility(View.INVISIBLE);
-                            Log.d("passwordcheck", serverPost.getReturnedValue());
-                            if (!serverPost.getReturnedValue().equals(" ")) {
-                                Log.d("if", "working");
-                                showDialog("Successfully signed up", true);
-                            }
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
+                    AddStalkerCallback addStalkerCallback = new AddStalkerCallback();
+                    Call<String> call = apiService.addStalker((HashMap<String, String>) createRequestBody());
+                    call.enqueue(addStalkerCallback);
                 }
-                else{
-                    showDialog("Passwords do not match", false);
-                }
+
+            } else {
+                showDialog("Passwords do not match", false);
             }
         });
     }
@@ -112,29 +106,29 @@ public class SignUpScreen extends AppCompatActivity {
 
     }
 
-    protected void clear(){
+    protected void clear() {
         login.setText("");
         password.setText("");
         repassword.setText("");
         email.setText("");
     }
 
-    private boolean checkEmptyFields(){
-        if(login.getText().toString().equals("") ||
-           password.getText().toString().equals("") ||
-           repassword.getText().toString().equals("") ||
-           email.getText().toString().equals(""))
+    private boolean checkEmptyFields() {
+        if (login.getText().toString().equals("") ||
+                password.getText().toString().equals("") ||
+                repassword.getText().toString().equals("") ||
+                email.getText().toString().equals(""))
             return true;
         else return false;
     }
 
-    private void showDialog(String message, final boolean closeActvity){
+    private void showDialog(String message, final boolean closeActvity) {
         AlertDialog alertDialog = new AlertDialog.Builder(SignUpScreen.this)
                 .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(closeActvity) SignUpScreen.this.onBackPressed();
+                        if (closeActvity) SignUpScreen.this.onBackPressed();
                     }
                 }).show();
     }
@@ -142,6 +136,39 @@ public class SignUpScreen extends AppCompatActivity {
     public boolean checkEmail(String email) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
+    }
+
+    private Map<String, String> createRequestBody() {
+
+        HashMap<String, String> body = new HashMap<>();
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+
+        body.put("name", login.getText().toString());
+        body.put("id", "1");
+        body.put("email", email.getText().toString());
+        body.put("dateOfJoining", timeStamp);
+        body.put("lastOnline", timeStamp);
+        body.put("password", passwd);
+
+        return body;
+    }
+
+    private final class StalkerAddedEventHandler {
+
+        @Subscribe
+        public void handleStalkerAddedEvent(StalkerAddedEvent event) {
+            showDialog(event.getMessage(), false);
+            startActivity(new Intent(getApplicationContext(), LoginScreen.class));
+
+        }
+    }
+
+    private final class StalkerAddingErrorEventHandler {
+
+        @Subscribe
+        public void handleStalkerAddingErrorEvent(StalkerAddingErrorEvent event) {
+            showDialog(event.getMessage(), false);
+        }
     }
 }
 

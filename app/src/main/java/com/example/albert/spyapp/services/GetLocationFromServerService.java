@@ -3,14 +3,21 @@ package com.example.albert.spyapp.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.example.albert.spyapp.cordinates.CordsRequest;
+import com.example.albert.spyapp.requests.ApiClient;
+import com.example.albert.spyapp.requests.ApiInterface;
+import com.example.albert.spyapp.requests.callbacks.CordinatesCallback;
+import com.example.albert.spyapp.requests.responseModels.CordsResponse;
+
+import retrofit2.Call;
 
 public class GetLocationFromServerService extends IntentService {
 
-   public  GetLocationFromServerService(){
+    private ApiInterface apiService;
+
+    public GetLocationFromServerService() {
         super(GetLocationFromServerService.class.getSimpleName());
+        apiService = ApiClient.getClient().create(ApiInterface.class);
     }
 
 
@@ -34,25 +41,24 @@ public class GetLocationFromServerService extends IntentService {
 
     }
 
-    public void getLocFromServer(){
+    public void getLocFromServer() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    Log.d("getting loation working","clicked");
-                    CordsRequest request=new CordsRequest("http://35.204.80.21:4567/victim/getCords/albi",getApplicationContext());
-                    request.getCords();
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (true) {
+
+                CordinatesCallback cordinatesCallback = new CordinatesCallback();
+
+                Call<CordsResponse> call = apiService.getCords();
+
+                call.enqueue(cordinatesCallback);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
-
-
 
 
     }

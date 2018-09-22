@@ -4,7 +4,7 @@ public class Cordinates {
     private String cordinatesx;
     private String cordinatesy;
 
-    Cordinates(String cordinatesx,String cordinatesy){
+    public Cordinates(String cordinatesx, String cordinatesy){
         this.cordinatesx=cordinatesx;
         this.cordinatesy=cordinatesy;
     }
