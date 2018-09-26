@@ -3,6 +3,7 @@ package com.example.albert.spyapp.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.albert.spyapp.requests.ApiClient;
 import com.example.albert.spyapp.requests.ApiInterface;
@@ -51,7 +52,7 @@ public class GetLocationFromServerService extends IntentService {
                 Call<CordsResponse> call = apiService.getCords();
 
                 call.enqueue(cordinatesCallback);
-
+                Log.d("workingService","working");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

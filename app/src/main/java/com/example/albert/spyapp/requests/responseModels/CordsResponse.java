@@ -2,28 +2,43 @@ package com.example.albert.spyapp.requests.responseModels;
 
 import com.example.albert.spyapp.cordinates.Cordinates;
 import com.example.albert.spyapp.cordinates.LastLocationSingleton;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CordsResponse {
 
-    @SerializedName("")
-    private String rawResponse;
+    @Expose
+    @SerializedName("cordinatesx")
+    private String cordinatesx;
 
 
-    public String getRawResponse() {
-        return rawResponse;
+    @Expose
+    @SerializedName("cordinatesy")
+    private String cordinatesy;
+
+    public void setCordinatesx(String cordinatesx) {
+        this.cordinatesx = cordinatesx;
     }
 
-    public void setRawResponse(String rawResponse) {
-        this.rawResponse = rawResponse;
+    public void setCordinatesy(String cordinatesy) {
+        this.cordinatesy = cordinatesy;
     }
 
-    public Cordinates parseResponse() {
-        String[] parts = rawResponse.split(" ");
-        String cordinatesx = parts[0];
-        String cordinatesy = parts[1];
-        Cordinates cordinates = new Cordinates(cordinatesx, cordinatesy);
-
-        return  cordinates;
+    public String getCordinatesx() {
+        return cordinatesx;
     }
+
+    public String getCordinatesy() {
+        return cordinatesy;
+    }
+
+    CordsResponse(){
+
+    }
+
+    public Cordinates parseResponse(){
+
+        return new Cordinates(this.cordinatesx,this.cordinatesy);
+    }
+
 }
