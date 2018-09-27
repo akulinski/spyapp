@@ -17,7 +17,7 @@ import java.util.LinkedList;
 /**
  *
  */
-public final class SingletonCookieManager implements Serializable{
+public final class SingletonCookieManager implements Serializable {
 
     private static SingletonCookieManager cookieMenager;
     private static String fileName = "cookie.ser";
@@ -30,33 +30,33 @@ public final class SingletonCookieManager implements Serializable{
 
     private LinkedList<Cookie> cookies;
 
-    private SingletonCookieManager(Context context){
+    private SingletonCookieManager(Context context) {
 
-        cookieManagerSerializator=new CookieManagerSerializator(context);
-        cookies=cookieManagerSerializator.readJSON("cookies.json");
+        cookieManagerSerializator = new CookieManagerSerializator(context);
+        cookies = cookieManagerSerializator.readJSON("cookies.json");
 
-        if(cookies == null){
-            cookies=new LinkedList<>();
+        if (cookies == null) {
+            cookies = new LinkedList<>();
         }
     }
 
-    public static synchronized SingletonCookieManager getInstance(Context context){
+    public static synchronized SingletonCookieManager getInstance(Context context) {
 
-        if(cookieMenager == null){
-            cookieMenager=new SingletonCookieManager(context);
+        if (cookieMenager == null) {
+            cookieMenager = new SingletonCookieManager(context);
         }
         return cookieMenager;
     }
 
 
-    public void addCookie(Cookie cookie){
+    public void addCookie(Cookie cookie) {
         cookies.add(cookie);
     }
 
-    public Cookie getCookie(String id){
+    public Cookie getCookie(String id) {
 
-        for(Cookie cookie:cookies){
-            if(id.equals(cookie.getKeyValue().get("sesionid")))
+        for (Cookie cookie : cookies) {
+            if (id.equals(cookie.getKeyValue().get("sesionid")))
                 return cookie;
         }
 
@@ -64,8 +64,9 @@ public final class SingletonCookieManager implements Serializable{
     }
 
     public void removeSession() {
-        this.cookies.removeLast();
-
+        if (cookies.size() > 0) {
+            this.cookies.removeLast();
+        }
     }
 
     @Override
@@ -77,7 +78,7 @@ public final class SingletonCookieManager implements Serializable{
 
     // Serializes an object and saves it to a file
     public void saveToFile() {
-        cookieManagerSerializator.writeJSON(cookies,"cookies.json");
+        cookieManagerSerializator.writeJSON(cookies, "cookies.json");
     }
 
 }
